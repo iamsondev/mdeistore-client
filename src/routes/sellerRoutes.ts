@@ -1,6 +1,13 @@
-export const sellerRoutes = [
+import { Route } from "@/types";
+
+export const sellerRoutes: Route[] = [
   {
     title: "Seller-Dashboard",
-    url: "/seller-dashboard",
+    items: [
+      {
+        title: "Medicine",
+        url: "/medicines",
+      },
+    ],
   },
 ];

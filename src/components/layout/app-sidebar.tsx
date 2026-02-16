@@ -16,6 +16,7 @@ import Link from "next/link";
 import { adminRoutes } from "@/routes/adminRoutes";
 import { sellerRoutes } from "@/routes/sellerRoutes";
 import { customerRoutes } from "@/routes/customerRoutes";
+import { Route } from "@/types";
 
 export function AppSidebar({
   customer,
@@ -23,7 +24,7 @@ export function AppSidebar({
 }: {
   customer: { role: string };
 } & React.ComponentProps<typeof Sidebar>) {
-  let routes = [];
+  let routes: Route[] = [];
   switch (customer?.role) {
     case "admin":
       routes = adminRoutes;
@@ -42,24 +43,29 @@ export function AppSidebar({
   return (
     <Sidebar {...props}>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel className="capitalize">
-            {customer?.role} Menu
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {routes.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild tooltip={item.title}>
-                    <Link href={item.url} className="flex items-center gap-2">
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        {routes.map((group) => (
+          <SidebarGroup key={group.title}>
+            <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {group.items?.map((item) => {
+                  return (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton asChild tooltip={item.title}>
+                        <Link
+                          href={item.url}
+                          className="flex items-center gap-2"
+                        >
+                          <span>{item.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
       </SidebarContent>
 
       <SidebarRail />
