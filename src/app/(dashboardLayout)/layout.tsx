@@ -25,7 +25,7 @@ export default function DashboardLayout({
   customer: React.ReactNode;
 }) {
   const userInfo = {
-    role: "seller",
+    role: "admin",
   };
   return (
     <SidebarProvider>
