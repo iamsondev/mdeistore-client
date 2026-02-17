@@ -27,7 +27,10 @@ export function LoginForm({
       callbackURL: "http://localhost:5000",
     });
     console.log(data);
+    const session = await authClient.getSession();
+    console.log(session);
   };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
