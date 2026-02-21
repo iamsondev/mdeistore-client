@@ -13,6 +13,16 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    rules: {
+      "react/no-children-pop": [
+        true,
+        {
+          allowFunctions: true,
+        },
+      ],
+    },
+  },
 ]);
 
 export default eslintConfig;

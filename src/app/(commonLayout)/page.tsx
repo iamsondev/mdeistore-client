@@ -1,12 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { customerService } from "@/services/customer.service";
-
-export default async function Home() {
-  const { data } = await customerService.getsession();
-  console.log(data);
+export default function Home() {
   return (
     <div>
-      <Button className="bg-emerald-500">click here</Button>
+      <h1>This is Home page component</h1>
     </div>
   );
 }
