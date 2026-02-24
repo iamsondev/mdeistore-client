@@ -17,13 +17,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { useForm } from "@tanstack/react-form";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import * as z from "zod";
+
 const formSchema = z.object({
   password: z.string().min(8, "at least 8 character needed"),
   email: z.email(),
 });
 export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
+  const router = useRouter();
   const form = useForm({
     defaultValues: {
       email: "",
@@ -41,6 +44,16 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
           return;
         }
         toast.success("user logged in successfully", { id: toastId });
+        const session = await authClient.getSession();
+        const role = (session?.data?.user as any)?.role;
+
+        if (role === "ADMIN") {
+          router.push("/admin-dashboard");
+        } else if (role === "SELLER") {
+          router.push("/seller-dashboard");
+        } else {
+          router.push("/");
+        }
       } catch (err) {
         toast.error("Something Went Wrong, please try again", { id: toastId });
       }

@@ -14,6 +14,7 @@ interface getMedicineParams {
   page?: string;
   limit?: string;
   category?: string;
+  sellerId?: string;
 }
 
 export const sellerService = {
@@ -34,13 +35,21 @@ export const sellerService = {
 
       const config: RequestInit = {
         method: "GET",
-        next: options?.revalidate
-          ? { revalidate: options.revalidate, tags: ["medicines"] }
-          : { revalidate: 60, tags: ["medicines"] },
       };
+
+      if (options?.cache) {
+        config.cache = options.cache;
+      } else if (options?.revalidate) {
+        config.next = { revalidate: options.revalidate, tags: ["medicines"] };
+      } else {
+        config.next = { revalidate: 60, tags: ["medicines"] };
+      }
+      console.log("Config:", config);
 
       const res = await fetch(url.toString(), config);
       const data = await res.json();
+      console.log("API response status:", res.status);
+      console.log("API response data:", JSON.stringify(data));
 
       if (!res.ok) {
         return {
@@ -79,20 +88,12 @@ export const sellerService = {
   createMedicine: async (medicineData: Partial<Medicine>) => {
     try {
       const cookieStore = await cookies();
-      const token = cookieStore.get("accessToken")?.value;
-
-      if (!token) {
-        return {
-          data: null,
-          error: { message: "Unauthorized: Please login first", status: 401 },
-        };
-      }
 
       const res = await fetch(`${API_URL}/api/medicines`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Cookie: cookieStore.toString(),
         },
         body: JSON.stringify(medicineData),
       });
@@ -105,7 +106,6 @@ export const sellerService = {
           error: {
             message: data.message || "Error: Medicine could not be created",
             status: res.status,
-            details: data.errors || null,
           },
         };
       }
@@ -116,6 +116,69 @@ export const sellerService = {
         data: null,
         error: { message: "Server connection failed", status: 500 },
       };
+    }
+  },
+  deleteMedicine: async (id: string) => {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(`${env.API_URL}/api/medicines/${id}`, {
+        method: "DELETE",
+        headers: { Cookie: cookieStore.toString() },
+      });
+      const data = await res.json();
+      return { data, error: null };
+    } catch (err) {
+      return { data: null, error: { message: "Something went wrong" } };
+    }
+  },
+
+  updateMedicine: async (id: string, medicineData: Partial<Medicine>) => {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(`${env.API_URL}/api/medicines/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieStore.toString(),
+        },
+        body: JSON.stringify(medicineData),
+      });
+      const data = await res.json();
+      return { data, error: null };
+    } catch (err) {
+      return { data: null, error: { message: "Something went wrong" } };
+    }
+  },
+  getSellerOrders: async () => {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(`${API_URL}/api/orders/seller`, {
+        method: "GET",
+        headers: { Cookie: cookieStore.toString() },
+        cache: "no-store",
+      });
+      const data = await res.json();
+      return { data, error: null };
+    } catch (err) {
+      return { data: null, error: { message: "Something went wrong" } };
+    }
+  },
+
+  updateOrderStatus: async (id: string, status: string) => {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(`${API_URL}/api/orders/${id}/status`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieStore.toString(),
+        },
+        body: JSON.stringify({ status }),
+      });
+      const data = await res.json();
+      return { data, error: null };
+    } catch (err) {
+      return { data: null, error: { message: "Something went wrong" } };
     }
   },
 };

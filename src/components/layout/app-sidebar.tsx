@@ -17,6 +17,7 @@ import { adminRoutes } from "@/routes/adminRoutes";
 import { sellerRoutes } from "@/routes/sellerRoutes";
 import { customerRoutes } from "@/routes/customerRoutes";
 import { Route } from "@/types";
+import { Roles } from "@/constants/roles";
 
 export function AppSidebar({
   customer,
@@ -26,13 +27,13 @@ export function AppSidebar({
 } & React.ComponentProps<typeof Sidebar>) {
   let routes: Route[] = [];
   switch (customer?.role) {
-    case "admin":
+    case Roles.admin:
       routes = adminRoutes;
       break;
-    case "seller":
+    case Roles.seller:
       routes = sellerRoutes;
       break;
-    case "customer":
+    case Roles.customer:
       routes = customerRoutes;
       break;
     default:

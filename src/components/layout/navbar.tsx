@@ -21,6 +21,7 @@ import { ModeToggle } from "./ModeToggle";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { useEffect, useState } from "react";
+import { CartIcon } from "./CartIcon";
 
 const Navbar = ({
   logo = {
@@ -99,11 +100,7 @@ const Navbar = ({
             </NavigationMenu>
 
             <div className="flex items-center gap-3 border-l pl-4">
-              <Button variant="ghost" size="icon" asChild className="relative">
-                <Link href="/cart">
-                  <ShoppingCart className="h-5 w-5" />
-                </Link>
-              </Button>
+              <CartIcon />
 
               <ModeToggle />
 

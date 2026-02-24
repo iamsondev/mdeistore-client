@@ -14,6 +14,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { ModeToggle } from "@/components/layout/ModeToggle";
 
 export default async function DashboardLayout({
   admin,
@@ -33,7 +34,7 @@ export default async function DashboardLayout({
   });
 
   const session = await res.json();
-  const role = session?.user?.role?.toLowerCase();
+  const role = session?.user?.role;
 
   return (
     <SidebarProvider>
@@ -56,11 +57,15 @@ export default async function DashboardLayout({
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
+          <div className="ml-auto">
+            {" "}
+            <ModeToggle />
+          </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
-          {role === "admin" && admin}
-          {role === "seller" && seller}
-          {role === "customer" && customer}
+          {role === "ADMIN" && admin}
+          {role === "SELLER" && seller}
+          {role === "CUSTOMER" && customer}
         </div>
       </SidebarInset>
     </SidebarProvider>

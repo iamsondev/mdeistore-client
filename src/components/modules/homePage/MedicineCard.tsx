@@ -11,6 +11,7 @@ import { Medicine } from "@/types/medicine.type";
 import { ShoppingCart, Eye } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { AddToCartButton } from "@/components/layout/AddToCartButton";
 
 export default function MedicineCard({ medicine }: { medicine: Medicine }) {
   return (
@@ -72,12 +73,13 @@ export default function MedicineCard({ medicine }: { medicine: Medicine }) {
           </Button>
         </Link>
 
-        <Button
-          disabled={medicine.stock === 0}
-          className="flex-[1.5] flex items-center justify-center gap-2 bg-zinc-900 text-white py-2 rounded-lg text-sm font-medium hover:bg-zinc-800 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
-        >
-          <ShoppingCart className="h-4 w-4" /> Add to Cart
-        </Button>
+        <div className="flex-[1.5]">
+          <AddToCartButton
+            medicine={medicine}
+            isAvailable={medicine.stock > 0}
+            compact
+          />
+        </div>
       </CardFooter>
     </Card>
   );
