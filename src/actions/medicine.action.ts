@@ -20,9 +20,8 @@ export const createMedicine = async (data: MedicineData) => {
 };
 
 export const deleteMedicine = async (id: string) => {
-  console.log("Deleting medicine with id:", id);
   const res = await sellerService.deleteMedicine(id);
-  console.log("Delete response:", res);
+
   return res;
 };
 
@@ -30,8 +29,7 @@ export const updateMedicine = async (
   id: string,
   data: Partial<MedicineData>,
 ) => {
-  console.log("Action updateMedicine called:", id, data);
   const res = await sellerService.updateMedicine(id, data);
-  console.log("Update response:", res);
+
   return res;
 };

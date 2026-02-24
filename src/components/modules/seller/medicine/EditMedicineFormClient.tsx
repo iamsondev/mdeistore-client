@@ -63,7 +63,6 @@ export function EditMedicineFormClient({ categories, medicine }: Props) {
       onSubmit: medicineSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log("Submitting:", value);
       const toastId = toast.loading("Updating medicine...");
       try {
         const res = await updateMedicine(medicine.id, value);

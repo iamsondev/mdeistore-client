@@ -64,7 +64,6 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
       provider: "google",
       callbackURL: "http://localhost:5000",
     });
-    console.log(data);
   };
   return (
     <Card {...props}>

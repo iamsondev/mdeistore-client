@@ -12,13 +12,11 @@ export default async function MyInventoryPage() {
     headers: { Cookie: cookieStore.toString() },
   });
   const session = await sessionRes.json();
-  console.log("Session user id:", session?.user?.id);
 
   const { data } = await sellerService.getSellerMedicine(
     { sellerId: session?.user?.id },
     { cache: "no-store" },
   );
-  console.log("Raw data:", JSON.stringify(data));
 
   const medicineList = data?.data || data || [];
 

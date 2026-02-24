@@ -24,7 +24,6 @@ export function AddToCartButton({ medicine, isAvailable }: Props) {
   }, []);
   const addToCart = useCartStore((state) => state.addToCart);
   const handleAddToCart = () => {
-    console.log("Added to cart:", medicine);
     addToCart(medicine);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);

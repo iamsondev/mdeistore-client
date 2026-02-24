@@ -44,12 +44,9 @@ export const sellerService = {
       } else {
         config.next = { revalidate: 60, tags: ["medicines"] };
       }
-      console.log("Config:", config);
 
       const res = await fetch(url.toString(), config);
       const data = await res.json();
-      console.log("API response status:", res.status);
-      console.log("API response data:", JSON.stringify(data));
 
       if (!res.ok) {
         return {

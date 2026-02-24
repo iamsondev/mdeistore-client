@@ -21,7 +21,7 @@ export const adminService = {
   getAllOrders: async () => {
     try {
       const cookieStore = await cookies();
-      const res = await fetch(`${API_URL}/api/orders`, {
+      const res = await fetch(`${API_URL}/api/orders/admin/all`, {
         headers: { Cookie: cookieStore.toString() },
         cache: "no-store",
       });
@@ -35,7 +35,7 @@ export const adminService = {
   getCategories: async () => {
     try {
       const res = await fetch(`${API_URL}/api/categories`, {
-        next: { revalidate: 60, tags: ["categories"] },
+        cache: "no-store",
       });
       const data = await res.json();
       return { data, error: null };
@@ -67,6 +67,58 @@ export const adminService = {
       const res = await fetch(`${API_URL}/api/admin/statistics`, {
         headers: { Cookie: cookieStore.toString() },
         cache: "no-store",
+      });
+      const data = await res.json();
+      return { data, error: null };
+    } catch (err) {
+      return { data: null, error: { message: "Something went wrong" } };
+    }
+  },
+  createCategory: async (name: string, description: string, image: string) => {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(`${API_URL}/api/categories`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieStore.toString(),
+        },
+        body: JSON.stringify({ name, description, image }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        return { data: null, error: { message: data?.message || "Failed" } };
+      }
+      return { data, error: null };
+    } catch (err) {
+      return { data: null, error: { message: "Something went wrong" } };
+    }
+  },
+
+  updateCategory: async (id: string, name: string, description: string) => {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(`${API_URL}/api/categories/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieStore.toString(),
+        },
+        body: JSON.stringify({ name, description }),
+      });
+      const data = await res.json();
+      return { data, error: null };
+    } catch (err) {
+      return { data: null, error: { message: "Something went wrong" } };
+    }
+  },
+
+  deleteCategory: async (id: string) => {
+    try {
+      const cookieStore = await cookies();
+      const res = await fetch(`${API_URL}/api/categories/${id}`, {
+        method: "DELETE",
+        headers: { Cookie: cookieStore.toString() },
       });
       const data = await res.json();
       return { data, error: null };
