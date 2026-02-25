@@ -11,9 +11,12 @@ import {
 } from "@/actions/admin.action";
 import { toast } from "sonner";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export function CategoriesTable({ categories }: { categories: any[] }) {
   const [list, setList] = useState(categories);
+  const router = useRouter();
+
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editName, setEditName] = useState("");
   const [editDesc, setEditDesc] = useState("");
@@ -110,6 +113,7 @@ export function CategoriesTable({ categories }: { categories: any[] }) {
           }
           toast.success("Category deleted!", { id: toastId });
           setList((prev) => prev.filter((c) => c.id !== id));
+          router.refresh();
         },
       },
       cancel: { label: "Cancel", onClick: () => {} },

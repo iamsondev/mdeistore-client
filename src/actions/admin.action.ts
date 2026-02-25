@@ -31,6 +31,6 @@ export const updateCategory = async (
 
 export const deleteCategory = async (id: string) => {
   const res = await adminService.deleteCategory(id);
-  revalidateTag("categories");
+
   return res;
 };

@@ -4,6 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { AddToCartButton } from "@/components/layout/AddToCartButton";
 import { Medicine, Category } from "@/types";
 import Link from "next/link";
+import { customerService } from "@/services/customer.service";
+import { ReviewSection } from "@/components/modules/seller/medicine/ReviewSection";
 
 export const dynamicParams = true;
 
@@ -34,6 +36,11 @@ export default async function DetailsPage({ params }: TMedicineDetailsProps) {
 
   const response = await sellerService.getMedicineById(id);
   const medicine = response?.data?.data as Medicine;
+  const { data: reviewsData } = await customerService.getMedicineReviews(id);
+  console.log("Reviews data:", JSON.stringify(reviewsData));
+  const reviews = reviewsData?.data || [];
+  const { hasOrdered } = await customerService.checkOrderedMedicine(id);
+  console.log("hasOrdered:", hasOrdered);
 
   if (!medicine) {
     return (
@@ -135,6 +142,13 @@ export default async function DetailsPage({ params }: TMedicineDetailsProps) {
             <AddToCartButton medicine={medicine} isAvailable={isAvailable} />
           </div>
         </div>
+      </div>
+      <div className="mt-12">
+        <ReviewSection
+          medicineId={id}
+          hasOrdered={hasOrdered}
+          reviews={reviews}
+        />
       </div>
     </div>
   );
