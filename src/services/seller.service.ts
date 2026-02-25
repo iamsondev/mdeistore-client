@@ -13,7 +13,7 @@ interface getMedicineParams {
   searchTerm?: string;
   page?: string;
   limit?: string;
-  category?: string;
+  categoryId?: string;
   sellerId?: string;
 }
 

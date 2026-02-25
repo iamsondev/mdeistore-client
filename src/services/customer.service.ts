@@ -24,7 +24,7 @@ export const customerService = {
 
   getCategories: async function () {
     try {
-      const res = await fetch(`${API_URL}/categories`, {
+      const res = await fetch(`${API_URL}/api/categories`, {
         next: { revalidate: 60, tags: ["categories"] },
       });
       const data = await res.json();

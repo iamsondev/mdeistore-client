@@ -14,6 +14,7 @@ export default async function Shop({
   const { data, error } = await sellerService.getSellerMedicine({
     searchTerm: params.searchTerm,
     page: params.page,
+    categoryId: params.categoryId,
   });
 
   if (error) {
