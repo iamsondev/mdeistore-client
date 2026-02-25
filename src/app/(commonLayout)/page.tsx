@@ -3,6 +3,10 @@ import { sellerService } from "@/services/seller.service";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { HeroCarousel } from "@/components/layout/HeroCarousel";
+import { HowItWorks } from "@/components/layout/HowItWorks";
+import { WhyChooseUs } from "@/components/layout/WhyChooseUs";
+import { FaFacebook, FaGithub, FaXTwitter, FaLinkedin } from "react-icons/fa6";
+import { Footer } from "@/components/layout/Footer";
 
 export default async function Home() {
   const { data: categoryData } = await customerService.getCategories();
@@ -16,7 +20,7 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen">
-      <section className="bg-gradient-to-br from-primary/10 to-primary/5 py-20 px-6 text-center">
+      <section>
         <HeroCarousel />
       </section>
 
@@ -69,10 +73,16 @@ export default async function Home() {
           </Button>
         </div>
       </section>
+      <section>
+        <HowItWorks />
+      </section>
 
-      {/* Footer */}
-      <footer className="border-t py-8 text-center text-muted-foreground text-sm">
-        <p>© 2026 MediStore. All rights reserved.</p>
+      <section>
+        <WhyChooseUs />
+      </section>
+
+      <footer className="border-t bg-muted/20 py-12 px-6">
+        <Footer />
       </footer>
     </div>
   );

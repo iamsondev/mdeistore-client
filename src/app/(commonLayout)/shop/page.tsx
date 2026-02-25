@@ -12,7 +12,7 @@ export default async function Shop({
   const params = await searchParams;
 
   const { data, error } = await sellerService.getSellerMedicine({
-    searchTerm: params.searchTerm,
+    search: params.searchTerm,
     page: params.page,
     categoryId: params.categoryId,
   });

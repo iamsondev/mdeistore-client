@@ -22,13 +22,14 @@ import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { useEffect, useState } from "react";
 import { CartIcon } from "./CartIcon";
+import { useRouter } from "next/navigation";
 
 const Navbar = ({
   logo = {
     url: "/",
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
-    alt: "logo",
-    title: "MediStore 💊",
+
+    src: "https://i.ibb.co.com/Nd7y9BKL/Logo-with-Abstract-Shelf-Icon.png",
+    alt: "MediStore Logo",
   },
   menu = [
     { title: "Home", url: "/" },
@@ -42,6 +43,14 @@ const Navbar = ({
 }: any) => {
   const { data: session } = authClient.useSession();
   const [mounted, setMounted] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const router = useRouter();
+
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && searchTerm.trim()) {
+      router.push(`/shop?searchTerm=${searchTerm.trim()}`);
+    }
+  };
 
   useEffect(() => {
     setMounted(true);
@@ -58,7 +67,6 @@ const Navbar = ({
     >
       <div className="container mx-auto px-4">
         <nav className="flex h-16 items-center justify-between gap-4">
-          {/* Logo */}
           <div className="flex items-center gap-6">
             <Link href={logo.url} className="flex items-center gap-2">
               <img
@@ -78,6 +86,9 @@ const Navbar = ({
               type="search"
               placeholder="Search medicine..."
               className="pl-8 w-full bg-muted/50 focus-visible:ring-primary"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={handleSearch}
             />
           </div>
 
@@ -158,6 +169,9 @@ const Navbar = ({
                       type="search"
                       placeholder="Search medicine..."
                       className="pl-8"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      onKeyDown={handleSearch}
                     />
                   </div>
                   <div className="flex flex-col gap-4">

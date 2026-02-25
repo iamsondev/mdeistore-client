@@ -10,7 +10,7 @@ interface serviceOptions {
 }
 
 interface getMedicineParams {
-  searchTerm?: string;
+  search?: string;
   page?: string;
   limit?: string;
   categoryId?: string;

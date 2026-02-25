@@ -8,7 +8,6 @@ export default async function MyOrdersPage() {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-6">My Orders</h1>
-      import Link from "next/link";
       {orders.length === 0 ? (
         <p className="text-muted-foreground">No orders found.</p>
       ) : (
