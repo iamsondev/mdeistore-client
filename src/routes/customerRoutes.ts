@@ -9,12 +9,16 @@ export const customerRoutes: Route[] = [
         url: "/",
       },
       {
-        title: "My Orders",
+        title: "📦 My Orders",
         url: "/dashboard/orders",
       },
       {
-        title: "Review",
+        title: "⭐ Review",
         url: "/review",
+      },
+      {
+        title: "👤 Profile",
+        url: "/dashboard/profile",
       },
     ],
   },
