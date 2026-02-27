@@ -1,4 +1,4 @@
-import { revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -8,6 +8,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Tag is required" }, { status: 400 });
   }
 
-  revalidateTag(tag);
+  revalidatePath(`/${tag}`);
   return NextResponse.json({ revalidated: true, tag });
 }
