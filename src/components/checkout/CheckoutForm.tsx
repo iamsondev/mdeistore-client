@@ -34,7 +34,7 @@ export function CheckoutForm() {
         const orderData = {
           address: value.address,
           paymentMethod: "Cash On Delivery",
-          items: items.map((item) => ({
+          orderItems: items.map((item) => ({
             medicineId: item.medicine.id,
             quantity: item.quantity,
             price: item.medicine.price,
