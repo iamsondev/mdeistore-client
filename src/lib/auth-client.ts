@@ -1,5 +1,5 @@
 import { createAuthClient } from "better-auth/react";
 
 export const authClient = createAuthClient({
-  baseURL: "https://medistore-server-sable.vercel.app",
+  baseURL: "https://medistore-client-bice.vercel.app",
 });
