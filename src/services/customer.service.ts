@@ -6,10 +6,9 @@ const API_URL = env.API_URL;
 
 const getCookieHeader = async () => {
   const cookieStore = await cookies();
-  return cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
+  const allCookies = cookieStore.getAll();
+  console.log("All cookies:", JSON.stringify(allCookies));
+  return allCookies.map((c) => `${c.name}=${c.value}`).join("; ");
 };
 
 export const customerService = {
