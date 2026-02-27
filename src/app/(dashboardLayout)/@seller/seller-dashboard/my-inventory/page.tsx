@@ -9,7 +9,7 @@ export default async function MyInventoryPage() {
   const cookieStore = await cookies();
 
   const sessionRes = await fetch(
-    "https://medistore-server-sable.vercel.app/api/auth/get-session",
+    "https://medistore-server-fawn.vercel.app/api/auth/get-session",
     {
       headers: { Cookie: cookieStore.toString() },
     },
