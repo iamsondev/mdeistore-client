@@ -1,6 +1,6 @@
-// components/modules/checkout/CheckoutForm.tsx
 "use client";
 
+import { useEffect } from "react";
 import { useCartStore } from "@/store/cartStore/cartStore";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,12 +26,8 @@ export function CheckoutForm() {
   const router = useRouter();
 
   const form = useForm({
-    defaultValues: {
-      address: "",
-    },
-    validators: {
-      onSubmit: checkoutSchema,
-    },
+    defaultValues: { address: "" },
+    validators: { onSubmit: checkoutSchema },
     onSubmit: async ({ value }) => {
       const toastId = toast.loading("Placing order...");
       try {
@@ -44,14 +40,11 @@ export function CheckoutForm() {
             price: item.medicine.price,
           })),
         };
-
         const res = await createOrder(orderData);
-
         if (res.error) {
           toast.error(res.error.message, { id: toastId });
           return;
         }
-
         toast.success("Order placed successfully!", { id: toastId });
         clearCart();
         router.push("/orders");
@@ -61,8 +54,13 @@ export function CheckoutForm() {
     },
   });
 
+  useEffect(() => {
+    if (items.length === 0) {
+      router.push("/cart");
+    }
+  }, [items, router]);
+
   if (items.length === 0) {
-    router.push("/cart");
     return null;
   }
 
@@ -101,7 +99,6 @@ export function CheckoutForm() {
                   );
                 }}
               </form.Field>
-
               <Field>
                 <FieldLabel>Payment Method</FieldLabel>
                 <Input value="Cash On Delivery" disabled />
@@ -133,7 +130,6 @@ export function CheckoutForm() {
               <span>৳{totalPrice().toFixed(2)}</span>
             </div>
           </div>
-
           <Button
             form="checkout-form"
             type="submit"

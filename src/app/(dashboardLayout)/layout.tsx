@@ -28,10 +28,13 @@ export default async function DashboardLayout({
 }) {
   const cookieStore = await cookies();
 
-  const res = await fetch("http://localhost:3000/api/auth/get-session", {
-    headers: { cookie: cookieStore.toString() },
-    cache: "no-store",
-  });
+  const res = await fetch(
+    "https://medistore-server-sable.vercel.app/api/auth/get-session",
+    {
+      headers: { cookie: cookieStore.toString() },
+      cache: "no-store",
+    },
+  );
 
   const session = await res.json();
   const role = session?.user?.role;

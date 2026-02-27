@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { env } from "@/env";
-import { revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 export const createReview = async (data: {
   medicineId: string;
@@ -20,7 +20,7 @@ export const createReview = async (data: {
       body: JSON.stringify(data),
     });
     const result = await res.json();
-    revalidateTag("reviews");
+    revalidatePath("/medicines");
     return { data: result, error: null };
   } catch (err) {
     return { data: null, error: { message: "Something went wrong" } };

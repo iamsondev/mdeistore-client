@@ -1,7 +1,7 @@
 "use server";
 
 import { sellerService } from "@/services/seller.service";
-import { revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 export interface MedicineData {
   name: string;
@@ -15,13 +15,13 @@ export interface MedicineData {
 
 export const createMedicine = async (data: MedicineData) => {
   const res = await sellerService.createMedicine(data);
-  revalidateTag("medicines", "max");
+  revalidatePath("/seller/medicines");
   return res;
 };
 
 export const deleteMedicine = async (id: string) => {
   const res = await sellerService.deleteMedicine(id);
-
+  revalidatePath("/seller/medicines");
   return res;
 };
 
@@ -30,6 +30,6 @@ export const updateMedicine = async (
   data: Partial<MedicineData>,
 ) => {
   const res = await sellerService.updateMedicine(id, data);
-
+  revalidatePath("/seller/medicines");
   return res;
 };

@@ -1,11 +1,11 @@
 "use server";
 
 import { adminService } from "@/services/admin.service";
-import { revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 export const updateUserStatus = async (id: string, status: string) => {
   const res = await adminService.updateUserStatus(id, status);
-  revalidateTag("users");
+  revalidatePath("/admin/users");
   return res;
 };
 
@@ -15,7 +15,7 @@ export const createCategory = async (
   image: string,
 ) => {
   const res = await adminService.createCategory(name, description, image);
-  revalidateTag("categories");
+  revalidatePath("/admin/categories");
   return res;
 };
 
@@ -25,12 +25,12 @@ export const updateCategory = async (
   description: string,
 ) => {
   const res = await adminService.updateCategory(id, name, description);
-  revalidateTag("categories");
+  revalidatePath("/admin/categories");
   return res;
 };
 
 export const deleteCategory = async (id: string) => {
   const res = await adminService.deleteCategory(id);
-
+  revalidatePath("/admin/categories");
   return res;
 };
