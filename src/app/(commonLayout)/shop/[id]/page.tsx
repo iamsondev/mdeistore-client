@@ -23,12 +23,17 @@ function isCategoryObject(category: any): category is Category {
 }
 
 export async function generateStaticParams() {
-  const { data } = await sellerService.getSellerMedicine(undefined, {
-    revalidate: 60,
-  });
-  return data?.data
-    .map((medicine: Medicine) => ({ id: medicine.id }))
-    .splice(0, 3);
+  try {
+    const { data } = await sellerService.getSellerMedicine(undefined, {
+      revalidate: 60,
+    });
+    if (!data?.data) return [];
+    return data.data
+      .slice(0, 3)
+      .map((medicine: Medicine) => ({ id: medicine.id }));
+  } catch (err) {
+    return [];
+  }
 }
 
 export default async function DetailsPage({ params }: TMedicineDetailsProps) {
