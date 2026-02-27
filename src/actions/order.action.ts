@@ -20,9 +20,16 @@ export const createOrder = async (orderData: {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Cookie: cookieStore.toString(),
+        Cookie: cookieStore
+          .getAll()
+          .map((c) => `${c.name}=${c.value}`)
+          .join("; "),
       },
-      body: JSON.stringify(orderData),
+      body: JSON.stringify({
+        address: orderData.address,
+        paymentMethod: orderData.paymentMethod,
+        items: orderData.orderItems,
+      }),
     });
 
     const data = await res.json();
