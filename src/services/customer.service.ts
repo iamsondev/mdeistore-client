@@ -4,12 +4,19 @@ import { cookies } from "next/headers";
 const AUTH_URL = env.AUTH_URL;
 const API_URL = env.API_URL;
 
+const getCookieHeader = async () => {
+  const cookieStore = await cookies();
+  return cookieStore
+    .getAll()
+    .map((c) => `${c.name}=${c.value}`)
+    .join("; ");
+};
+
 export const customerService = {
   getsession: async function () {
     try {
-      const cookieStore = await cookies();
       const res = await fetch(`${AUTH_URL}/get-session`, {
-        headers: { Cookie: cookieStore.toString() },
+        headers: { Cookie: await getCookieHeader() },
         cache: "no-store",
       });
       const session = await res.json();
@@ -33,11 +40,11 @@ export const customerService = {
       return { data: null, error: { message: "Something went wrong" } };
     }
   },
+
   getMyOrders: async function () {
     try {
-      const cookieStore = await cookies();
       const res = await fetch(`${env.API_URL}/api/orders`, {
-        headers: { Cookie: cookieStore.toString() },
+        headers: { Cookie: await getCookieHeader() },
         cache: "no-store",
       });
       const data = await res.json();
@@ -46,11 +53,11 @@ export const customerService = {
       return { data: null, error: { message: "Something went wrong" } };
     }
   },
+
   getOrderById: async function (id: string) {
     try {
-      const cookieStore = await cookies();
       const res = await fetch(`${env.API_URL}/api/orders/${id}`, {
-        headers: { Cookie: cookieStore.toString() },
+        headers: { Cookie: await getCookieHeader() },
         cache: "no-store",
       });
       const data = await res.json();
@@ -59,11 +66,11 @@ export const customerService = {
       return { data: null, error: { message: "Something went wrong" } };
     }
   },
+
   checkOrderedMedicine: async (medicineId: string) => {
     try {
-      const cookieStore = await cookies();
       const res = await fetch(`${API_URL}/api/orders`, {
-        headers: { Cookie: cookieStore.toString() },
+        headers: { Cookie: await getCookieHeader() },
         cache: "no-store",
       });
       const data = await res.json();

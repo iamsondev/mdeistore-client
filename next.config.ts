@@ -25,7 +25,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/auth/:path*",
-        destination: `https://medistore-server-sable.vercel.app/api/auth/:path*`,
+        destination: `https://medistore-server-fawn.vercel.app/api/auth/:path*`,
       },
     ];
   },
