@@ -29,7 +29,7 @@ export default async function DashboardLayout({
   const cookieStore = await cookies();
 
   const res = await fetch(
-    "https://medistore-server-sable.vercel.app/api/auth/get-session",
+    "https://medistore-server-fawn.vercel.app/api/auth/get-session",
     {
       headers: { cookie: cookieStore.toString() },
       cache: "no-store",
