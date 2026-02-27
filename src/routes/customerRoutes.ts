@@ -13,10 +13,6 @@ export const customerRoutes: Route[] = [
         url: "/dashboard/orders",
       },
       {
-        title: "⭐ Review",
-        url: "/review",
-      },
-      {
         title: "👤 Profile",
         url: "/dashboard/profile",
       },
