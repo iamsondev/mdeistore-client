@@ -1,36 +1,152 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+💊 MediStore – Online Medicine Shop
 
-## Getting Started
+🔗 Frontend Live: https://medistore-client-bice.vercel.app
 
-First, run the development server:
+🔗 Backend Live: https://medistore-server-fawn.vercel.app
 
-```bash
+🎥 Demo Video: https://drive.google.com/file/d/15dPqwcP9rfxQYUSjQkfi8nzgI-WNqPrr/view?usp=sharing
+
+📂 Frontend Repository: https://github.com/iamsondev/mdeistore-client
+
+📂 Backend Repository: https://github.com/iamsondev/medistore-server
+
+🚀 Project Overview
+
+MediStore is a full-stack e-commerce web application for purchasing over-the-counter (OTC) medicines.
+
+Users can:
+
+Browse medicines
+
+View detailed product information
+
+Add products to cart
+
+Login with Google
+
+Place orders securely
+
+🛠 Tech Stack
+🖥 Frontend
+
+Next.js 14 (App Router)
+
+TypeScript
+
+Tailwind CSS
+
+Shadcn UI
+
+Better Auth (Google OAuth)
+
+Axios
+
+⚙ Backend
+
+Node.js
+
+Express.js
+
+PostgreSQL
+
+Prisma ORM
+
+Better Auth
+
+Zod Validation
+
+☁ Deployment
+
+Vercel (Frontend & Backend)
+
+PostgreSQL (Production Database)
+
+🔐 Authentication
+
+Google OAuth Login
+
+Secure session handling using Better Auth
+
+Role-based user management
+
+✨ Core Features
+
+🔍 Medicine Search & Browse
+
+🛒 Add to Cart
+
+📦 Order Placement
+
+🔐 Secure Authentication
+
+📱 Responsive UI
+
+🗂 Admin Medicine Management
+
+❌ Out-of-stock Handling
+
+📦 Installation Guide
+1️⃣ Clone Repositories
+git clone https://github.com/iamsondev/mdeistore-client
+git clone https://github.com/iamsondev/medistore-server
+2️⃣ Backend Setup
+cd medistore-server
+npm install
+
+Create .env file:
+
+DATABASE_URL=your_postgres_database_url
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+BETTER_AUTH_SECRET=your_secret
+
+Run:
+
+npx prisma generate
+npx prisma migrate dev
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+3️⃣ Frontend Setup
+cd mdeistore-client
+npm install
+npm run dev
+🗄 Database Schema
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Built using Prisma ORM with:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+User
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Medicine
 
-## Learn More
+Order
 
-To learn more about Next.js, take a look at the following resources:
+Cart
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Role-based system
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+🌍 Live Deployment
 
-## Deploy on Vercel
+Frontend deployed on Vercel
+Backend deployed on Vercel Serverless Functions
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+📈 Future Improvements
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+💳 Payment Gateway Integration
+
+📊 Admin Dashboard Analytics
+
+📦 Order Tracking System
+
+⭐ Review & Rating System
+
+📧 Email Notification System
+
+👨‍💻 Author
+
+Sondip Kumar
+Full Stack Developer (MERN + Next.js + PostgreSQL)
+
+GitHub: https://github.com/iamsondev
+
+📜 License
+
+This project is for educational purposes.
