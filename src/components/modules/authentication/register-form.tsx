@@ -19,41 +19,59 @@ import { authClient } from "@/lib/auth-client";
 import { useForm } from "@tanstack/react-form";
 import { toast } from "sonner";
 import * as z from "zod";
+
 const formSchema = z.object({
   name: z.string().min(1, "This field is required"),
   password: z.string().min(8, "at least 8 character needed"),
   email: z.email(),
+  role: z.string().min(1, "Please select a role"),
 });
+
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const form = useForm({
     defaultValues: {
       name: "",
       email: "",
       password: "",
+      role: "CUSTOMER" as "CUSTOMER" | "SELLER",
     },
     validators: {
-      onSubmit: formSchema,
+      onSubmit: ({ value }) => {
+        const result = formSchema.safeParse(value);
+        if (!result.success) {
+          return result.error.flatten().fieldErrors;
+        }
+      },
     },
     onSubmit: async ({ value }) => {
       const toastId = toast.loading("creating user");
       try {
-        const { data, error } = await authClient.signUp.email(value);
+        const { data, error } = await authClient.signUp.email({
+          name: value.name,
+          email: value.email,
+          password: value.password,
+          role: value.role,
+        } as any);
         if (error) {
           toast.error(error.message, { id: toastId });
           return;
         }
-        toast.success("user created successfully", { id: toastId });
+        toast.success("User created successfully! Please verify your email.", {
+          id: toastId,
+        });
       } catch (err) {
         toast.error("Something Went Wrong, please try again", { id: toastId });
       }
     },
   });
+
   const handleGoogleLogin = async () => {
-    const data = await authClient.signIn.social({
+    await authClient.signIn.social({
       provider: "google",
       callbackURL: "https://medistore-client-bice.vercel.app",
     });
   };
+
   return (
     <Card {...props}>
       <CardHeader>
@@ -71,9 +89,8 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
           }}
         >
           <FieldGroup>
-            <form.Field
-              name="name"
-              children={(field) => {
+            <form.Field name="name">
+              {(field) => {
                 const isInvalid =
                   field.state.meta.isTouched && !field.state.meta.isValid;
                 return (
@@ -82,7 +99,6 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                     <Input
                       type="text"
                       id={field.name}
-                      name={field.name}
                       value={field.state.value}
                       onChange={(e) => field.handleChange(e.target.value)}
                     />
@@ -92,10 +108,10 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                   </Field>
                 );
               }}
-            />
-            <form.Field
-              name="email"
-              children={(field) => {
+            </form.Field>
+
+            <form.Field name="email">
+              {(field) => {
                 const isInvalid =
                   field.state.meta.isTouched && !field.state.meta.isValid;
                 return (
@@ -104,7 +120,6 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                     <Input
                       type="email"
                       id={field.name}
-                      name={field.name}
                       value={field.state.value}
                       onChange={(e) => field.handleChange(e.target.value)}
                     />
@@ -114,10 +129,10 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                   </Field>
                 );
               }}
-            />
-            <form.Field
-              name="password"
-              children={(field) => {
+            </form.Field>
+
+            <form.Field name="password">
+              {(field) => {
                 const isInvalid =
                   field.state.meta.isTouched && !field.state.meta.isValid;
                 return (
@@ -126,7 +141,6 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                     <Input
                       type="password"
                       id={field.name}
-                      name={field.name}
                       value={field.state.value}
                       onChange={(e) => field.handleChange(e.target.value)}
                     />
@@ -136,7 +150,45 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                   </Field>
                 );
               }}
-            />
+            </form.Field>
+
+            <form.Field name="role">
+              {(field) => {
+                const isInvalid =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
+                return (
+                  <Field data-invalid={isInvalid}>
+                    <FieldLabel>Role</FieldLabel>
+                    <div className="flex gap-4 mt-1">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          value="CUSTOMER"
+                          checked={field.state.value === "CUSTOMER"}
+                          onChange={() => field.handleChange("CUSTOMER")}
+                          className="w-4 h-4"
+                        />
+                        <span>Customer</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          value="SELLER"
+                          checked={field.state.value === "SELLER"}
+                          onChange={() => field.handleChange("SELLER")}
+                          className="w-4 h-4"
+                        />
+                        <span>Seller</span>
+                      </label>
+                    </div>
+                    {isInvalid && (
+                      <FieldError errors={field.state.meta.errors} />
+                    )}
+                  </Field>
+                );
+              }}
+            </form.Field>
+
             <Button
               onClick={() => handleGoogleLogin()}
               variant="outline"
