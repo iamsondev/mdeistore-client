@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { 
   MessageSquare, 
   ShieldAlert, 
@@ -110,7 +110,7 @@ const ModeratorDashboard: React.FC<ModeratorDashboardProps> = ({ userName, stats
     }
   }, []);
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -121,7 +121,7 @@ const ModeratorDashboard: React.FC<ModeratorDashboardProps> = ({ userName, stats
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,

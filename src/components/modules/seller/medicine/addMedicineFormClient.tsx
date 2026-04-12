@@ -1,6 +1,7 @@
 "use client";
 
 import { createMedicine } from "@/actions/medicine.action";
+import { generateAIDescriptionAction } from "@/actions/admin.action";
 import { Button } from "@/components/ui/button";
 import {
   Card,

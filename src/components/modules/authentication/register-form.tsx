@@ -28,9 +28,11 @@ const formSchema = z.object({
   name: z.string().min(1, "This field is required"),
   password: z.string().min(8, "at least 8 character needed"),
   email: z.string().email(),
-  role: z.string().min(1, "Please select a role"),
+  role: z.enum(["ADMIN", "SELLER", "CUSTOMER", "MODERATOR", "DELIVERY_AGENT"]),
   image: z.string().optional(),
 });
+
+type UserRole = "ADMIN" | "SELLER" | "CUSTOMER" | "MODERATOR" | "DELIVERY_AGENT";
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const router = useRouter();
@@ -39,7 +41,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
       name: "",
       email: "",
       password: "",
-      role: "CUSTOMER" as "CUSTOMER" | "SELLER" | "ADMIN" | "MODERATOR" | "DELIVERY_AGENT",
+      role: "CUSTOMER" as UserRole,
       image: "",
     },
     validators: {
@@ -287,7 +289,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                             type="radio"
                             value={r}
                             checked={field.state.value === r}
-                            onChange={() => field.handleChange(r)}
+                            onChange={() => field.handleChange(r as UserRole)}
                             className="sr-only"
                           />
                           <span className="text-xs text-center leading-tight">
@@ -303,7 +305,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
                             type="radio"
                             value={r}
                             checked={field.state.value === r}
-                            onChange={() => field.handleChange(r)}
+                            onChange={() => field.handleChange(r as UserRole)}
                             className="sr-only"
                           />
                           <span className="text-xs text-center leading-tight">{r}</span>
