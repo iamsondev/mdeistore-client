@@ -1,7 +1,8 @@
 import { env } from "@/env";
 import { cookies } from "next/headers";
 
-const API_URL = env.API_URL;
+// Sanitize API_URL to remove trailing slashes
+const API_URL = env.API_URL?.replace(/\/$/, "");
 
 const getCookieHeader = async () => {
   const cookieStore = await cookies();

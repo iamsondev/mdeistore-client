@@ -10,7 +10,11 @@ async function handler(req: Request): Promise<Response> {
   const url = new URL(req.url);
 
   const targetPath = url.pathname.replace(/^\/api\/auth/, "");
-  const targetUrl = `${BACKEND_AUTH_URL}${targetPath}${url.search}`;
+  // Ensure we don't have double slashes and the path is constructed correctly
+  const sanitizedPath = targetPath.startsWith("/") ? targetPath : `/${targetPath}`;
+  const targetUrl = `${BACKEND_AUTH_URL.replace(/\/$/, "")}${sanitizedPath}${url.search}`;
+
+  console.log("Auth Proxying to:", targetUrl);
 
   const headers = new Headers(req.headers);
   // Prevent ERR_CONTENT_DECODING_FAILED by removing compression headers
@@ -29,6 +33,8 @@ async function handler(req: Request): Promise<Response> {
         : undefined,
     redirect: "manual",
   });
+
+  console.log("Auth Proxy Response Status:", proxyResponse.status);
 
   const responseHeaders = new Headers(proxyResponse.headers);
   // Remove these to let Next.js/Vercel recalculate them for the proxied body
