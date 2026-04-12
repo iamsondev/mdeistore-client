@@ -14,6 +14,7 @@ import { Testimonials } from "@/components/layout/Testimonials";
 import { FAQSection } from "@/components/layout/FAQSection";
 import { NewsletterSection } from "@/components/layout/NewsletterSection";
 
+export default async function Home() {
   // Fetch all data server-side in parallel
   const [
     { data: categoryData },
