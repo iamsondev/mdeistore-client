@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Quote, Star } from "lucide-react";
 
-const testimonials = [
+const defaultTestimonials = [
   {
     name: "Rahat Hossain",
     role: "Regular Customer",
@@ -27,7 +27,18 @@ const testimonials = [
   }
 ];
 
-export function Testimonials() {
+export function Testimonials({ reviews = [] }: { reviews?: any[] }) {
+  // If we have real reviews, map them to the format we need
+  const displayTestimonials = reviews.length > 0 
+    ? reviews.slice(0, 6).map((r: any) => ({
+        name: r.User?.name || "Customer",
+        role: "Verified Purchase",
+        image: r.User?.image || `https://i.pravatar.cc/150?u=${r.id}`,
+        text: r.comment,
+        rating: r.rating
+      }))
+    : defaultTestimonials;
+
   return (
     <section className="py-24 bg-muted/20">
       <div className="max-w-7xl mx-auto px-6">
@@ -43,10 +54,10 @@ export function Testimonials() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((t, idx) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {displayTestimonials.map((t, idx) => (
             <motion.div
-              key={t.name}
+              key={idx}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -60,20 +71,20 @@ export function Testimonials() {
 
               <div className="flex gap-1 mb-6">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className={`h-4 w-4 ${i < t.rating ? 'fill-primary text-primary' : 'fill-muted text-muted'}`} />
+                  <Star key={i} className={`h-4 w-4 ${i < (t.rating || 5) ? 'fill-primary text-primary' : 'fill-muted text-muted'}`} />
                 ))}
               </div>
 
-              <p className="text-muted-foreground leading-relaxed mb-8 italic font-medium">
+              <p className="text-muted-foreground leading-relaxed mb-8 italic font-medium line-clamp-4">
                 "{t.text}"
               </p>
 
-              <div className="flex items-center gap-4">
-                <div className="h-12 w-12 rounded-full overflow-hidden border-2 border-primary/20">
+              <div className="flex items-center gap-4 mt-auto">
+                <div className="h-12 w-12 rounded-full overflow-hidden border-2 border-primary/20 shrink-0">
                   <img src={t.image} alt={t.name} className="h-full w-full object-cover" />
                 </div>
-                <div>
-                  <h4 className="font-bold text-foreground">{t.name}</h4>
+                <div className="min-w-0">
+                  <h4 className="font-bold text-foreground truncate">{t.name}</h4>
                   <p className="text-xs font-medium text-muted-foreground">{t.role}</p>
                 </div>
               </div>
@@ -84,3 +95,4 @@ export function Testimonials() {
     </section>
   );
 }
+

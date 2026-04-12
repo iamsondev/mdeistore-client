@@ -7,6 +7,8 @@ import { useEffect, useState, useRef } from "react";
 interface StatProps {
   medicineCount: number;
   categoryCount: number;
+  customerCount?: number;
+  orderCount?: number;
 }
 
 function AnimatedCount({ value }: { value: number }) {
@@ -39,7 +41,7 @@ function AnimatedCount({ value }: { value: number }) {
   return <span>{count.toLocaleString()}</span>;
 }
 
-export function Statistics({ medicineCount, categoryCount }: StatProps) {
+export function Statistics({ medicineCount, categoryCount, customerCount = 0, orderCount = 0 }: StatProps) {
   const stats = [
     {
       label: "Available Products",
@@ -52,14 +54,14 @@ export function Statistics({ medicineCount, categoryCount }: StatProps) {
     {
       label: "Medicine Categories",
       value: categoryCount || 0,
-      suffix: "+",
+      suffix: "",
       icon: Shapes,
       color: "text-emerald-600",
       bg: "bg-emerald-50 dark:bg-emerald-950/30",
     },
     {
       label: "Deliveries Completed",
-      value: 8500,
+      value: orderCount || 8500, // Fallback to 8500 if DB is empty for demo
       suffix: "+",
       icon: Truck,
       color: "text-amber-600",
@@ -67,7 +69,7 @@ export function Statistics({ medicineCount, categoryCount }: StatProps) {
     },
     {
       label: "Satisfied Customers",
-      value: 12000,
+      value: customerCount || 12000, // Fallback to 12000 if DB is empty for demo
       suffix: "+",
       icon: Users,
       color: "text-purple-600",

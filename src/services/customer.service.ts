@@ -94,4 +94,16 @@ export const customerService = {
       return { data: null, error: { message: "Something went wrong" } };
     }
   },
+
+  getAllReviewsPublic: async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/reviews/public/all`, {
+        next: { revalidate: 3600, tags: ["reviews"] },
+      });
+      const data = await res.json();
+      return { data, error: null };
+    } catch (err) {
+      return { data: null, error: { message: "Something went wrong" } };
+    }
+  },
 };

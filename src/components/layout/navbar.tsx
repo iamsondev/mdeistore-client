@@ -49,14 +49,13 @@ import { useCartStore } from "@/store/cartStore/cartStore";
 import { getAllCategories } from "@/actions/category.action";
 import { Category } from "@/types/medicine.type";
 
-const supportLinks = [
-  { title: "About Us", href: "/about", icon: Info },
-  { title: "Help Center", href: "/faq", icon: HelpCircle },
-];
+// Support links are now part of mainRoutes
+
 
 const mainRoutes = [
-  { title: "Prescription", url: "/prescription" },
+  { title: "About Us", url: "/about-us" },
   { title: "Articles", url: "/blog" },
+  { title: "Help Center", url: "/help-center" },
   { title: "Contact Us", url: "/contact" },
 ];
 
@@ -181,25 +180,7 @@ export default function Navbar() {
                   </NavigationMenuItem>
                 ))}
 
-                {/* Support Dropdown */}
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="bg-transparent font-semibold">Support</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="w-[200px] p-2">
-                      {supportLinks.map((link) => (
-                        <li key={link.title}>
-                          <Link
-                            href={link.href}
-                            className="flex items-center gap-3 p-2 rounded-md hover:bg-accent transition text-sm font-medium"
-                          >
-                            <link.icon className="h-4 w-4 text-muted-foreground" />
-                            {link.title}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
+
 
               </NavigationMenuList>
             </NavigationMenu>
@@ -335,16 +316,7 @@ export default function Navbar() {
                       </div>
                     </div>
 
-                    {/* Support Mobile */}
-                    <div className="space-y-1">
-                      <p className="text-xs font-bold text-muted-foreground uppercase px-2 mb-2 tracking-widest">Support</p>
-                      {supportLinks.map((s) => (
-                        <Link key={s.title} href={s.href} className="flex items-center gap-3 px-4 py-3 text-sm font-semibold hover:text-primary transition-colors">
-                          <s.icon className="h-4 w-4" />
-                          {s.title}
-                        </Link>
-                      ))}
-                    </div>
+
                   </div>
 
                   <div className="p-6 border-t bg-muted/40 mt-auto">

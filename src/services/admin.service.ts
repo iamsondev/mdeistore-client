@@ -97,6 +97,18 @@ export const adminService = {
     }
   },
 
+  getPublicStatistics: async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/admin/public-statistics`, {
+        next: { revalidate: 3600 },
+      });
+      const data = await res.json();
+      return { data, error: null };
+    } catch (err) {
+      return { data: null, error: { message: "Something went wrong" } };
+    }
+  },
+
   // ─── Seller Management ───────────────────────────────────────────────────
   getAllSellers: async () => {
     try {
