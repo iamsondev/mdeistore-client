@@ -17,9 +17,6 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Medistore | Your Trusted Online Pharmacy",
   description: "Authentic medicines delivered to your doorstep",
-  icons: {
-    icon: "https://i.ibb.co.com/Rk756wh8/medicine-2.png",
-  },
 };
 
 export default function RootLayout({
