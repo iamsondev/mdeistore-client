@@ -13,6 +13,9 @@ async function handler(req: Request): Promise<Response> {
   const targetUrl = `${BACKEND_AUTH_URL}${targetPath}${url.search}`;
 
   const headers = new Headers(req.headers);
+  // Prevent ERR_CONTENT_DECODING_FAILED by removing compression headers
+  headers.delete("accept-encoding");
+  
   headers.set("x-forwarded-host", req.headers.get("host") ?? "");
   headers.set("x-forwarded-proto", url.protocol.replace(":", ""));
   headers.set("x-original-origin", FRONTEND_URL);
@@ -28,6 +31,10 @@ async function handler(req: Request): Promise<Response> {
   });
 
   const responseHeaders = new Headers(proxyResponse.headers);
+  // Remove these to let Next.js/Vercel recalculate them for the proxied body
+  responseHeaders.delete("content-encoding");
+  responseHeaders.delete("content-length");
+
   const location = responseHeaders.get("location");
   
   if (location) {
@@ -50,7 +57,10 @@ async function handler(req: Request): Promise<Response> {
     responseHeaders.set("location", rewrittenLocation);
   }
 
-  return new Response(proxyResponse.body, {
+  // Read body as arrayBuffer to avoid decoding issues with streams in some environments
+  const body = await proxyResponse.arrayBuffer();
+
+  return new Response(body, {
     status: proxyResponse.status,
     statusText: proxyResponse.statusText,
     headers: responseHeaders,
