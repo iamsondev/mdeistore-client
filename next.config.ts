@@ -21,14 +21,6 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  async rewrites() {
-    return [
-      {
-        source: "/api/auth/:path*",
-        destination: `https://medistore-server-fawn.vercel.app/api/auth/:path*`,
-      },
-    ];
-  },
 };
 
 export default nextConfig;

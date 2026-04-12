@@ -1,6 +1,7 @@
 import { sellerService } from "@/services/seller.service";
-import { ShieldCheck, Truck, RotateCcw, ChevronLeft } from "lucide-react";
+import { ShieldCheck, Truck, RotateCcw, ChevronLeft, Heart, Share2, Wallet } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { AddToCartButton } from "@/components/layout/AddToCartButton";
 import { Medicine, Category } from "@/types";
 import Link from "next/link";
@@ -65,6 +66,17 @@ export default async function DetailsPage({ params }: TMedicineDetailsProps) {
     : typeof medicine.category === "string"
       ? medicine.category
       : null;
+
+  // Fetch related medicines from same category
+  const { data: allMedicineData } = await sellerService.getSellerMedicine();
+  const allMedicines: Medicine[] = allMedicineData?.data || [];
+  
+  const relatedMedicines = allMedicines
+    .filter((m) => {
+      const mCategoryName = isCategoryObject(m.category) ? m.category.name : m.category;
+      return mCategoryName === categoryDisplay && m.id !== id;
+    })
+    .slice(0, 4);
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
@@ -143,12 +155,86 @@ export default async function DetailsPage({ params }: TMedicineDetailsProps) {
             ))}
           </div>
 
-          <div className="pt-2">
-            <AddToCartButton medicine={medicine} isAvailable={isAvailable} />
+          <div className="pt-6 space-y-4">
+            <div className="flex gap-3">
+              <div className="flex-1">
+                <AddToCartButton 
+                  medicine={medicine} 
+                  isAvailable={isAvailable} 
+                />
+              </div>
+              <Button 
+                variant="outline" 
+                size="icon" 
+                className="h-12 w-12 rounded-xl border-zinc-200 hover:bg-rose-50 hover:border-rose-200 hover:text-rose-600 transition-all duration-300 group"
+              >
+                <Heart className="h-5 w-5 transition-transform group-hover:scale-110" />
+              </Button>
+              <Button 
+                variant="outline" 
+                size="icon" 
+                className="h-12 w-12 rounded-xl border-zinc-200 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-600 transition-all duration-300 group"
+              >
+                <Share2 className="h-5 w-5 transition-transform group-hover:scale-110" />
+              </Button>
+            </div>
+            
+            <Button 
+              className="w-full h-12 rounded-xl bg-zinc-900 text-white hover:bg-zinc-800 transition-all font-bold group"
+              disabled={!isAvailable}
+            >
+              <Wallet className="mr-2 h-4 w-4" />
+              Instant Purchase (Checkout)
+            </Button>
           </div>
         </div>
       </div>
-      <div className="mt-12">
+      {/* Related Products Section */}
+      {relatedMedicines.length > 0 && (
+        <div className="mt-24 border-t border-zinc-100 pt-16">
+          <div className="flex items-center justify-between mb-8">
+             <div>
+                <h2 className="text-3xl font-black text-zinc-900 tracking-tight">Related <span className="text-blue-600">Products</span></h2>
+                <p className="text-zinc-500 font-medium">Customers who bought this also looked at</p>
+             </div>
+             <Link href="/shop" className="text-sm font-bold text-blue-600 hover:text-blue-700 underline underline-offset-4">
+                View All
+             </Link>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {relatedMedicines.map((item) => (
+              <Link 
+                key={item.id} 
+                href={`/shop/${item.id}`}
+                className="group flex flex-col bg-white border border-zinc-100 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-zinc-200/50 transition-all duration-300"
+              >
+                <div className="aspect-square relative overflow-hidden bg-zinc-50">
+                  <img 
+                    src={item.image || "https://placehold.co/400x400"} 
+                    alt={item.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute top-3 left-3">
+                    <Badge className="bg-white/90 backdrop-blur-sm text-zinc-800 border-none shadow-sm text-[10px] py-0 h-5">
+                      {item.manufacturer && item.manufacturer.split(' ')[0]}
+                    </Badge>
+                  </div>
+                </div>
+                <div className="p-4 flex-1 flex flex-col">
+                  <h3 className="font-bold text-zinc-900 group-hover:text-blue-600 transition-colors line-clamp-1">{item.name}</h3>
+                  <div className="mt-auto pt-3 flex items-center justify-between">
+                    <span className="font-black text-zinc-900 text-lg">৳{item.price}</span>
+                    <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-full">Explore</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="mt-20">
         <ReviewSection
           medicineId={id}
           hasOrdered={hasOrdered}

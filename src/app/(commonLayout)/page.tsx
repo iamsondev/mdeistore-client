@@ -1,89 +1,71 @@
 import { customerService } from "@/services/customer.service";
 import { sellerService } from "@/services/seller.service";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+
 import { HeroCarousel } from "@/components/layout/HeroCarousel";
+import { Statistics } from "@/components/layout/Statistics";
+import { CategoriesSection } from "@/components/layout/CategoriesSection";
+import { OfferHighlights } from "@/components/layout/OfferHighlights";
+import { FeaturedMedicines } from "@/components/layout/FeaturedMedicines";
 import { HowItWorks } from "@/components/layout/HowItWorks";
 import { WhyChooseUs } from "@/components/layout/WhyChooseUs";
-import { FaFacebook, FaGithub, FaXTwitter, FaLinkedin } from "react-icons/fa6";
-import { Footer } from "@/components/layout/Footer";
+import { LatestBlogs } from "@/components/layout/LatestBlogs";
+import { Testimonials } from "@/components/layout/Testimonials";
+import { FAQSection } from "@/components/layout/FAQSection";
+import { NewsletterSection } from "@/components/layout/NewsletterSection";
 
 export default async function Home() {
-  const { data: categoryData } = await customerService.getCategories();
-  const categories = categoryData?.data || [];
+  // Fetch all data server-side in parallel
+  const [{ data: categoryData }, { data: medicineData }] = await Promise.all([
+    customerService.getCategories(),
+    sellerService.getSellerMedicine(undefined, { cache: "no-store" }),
+  ]);
 
-  const { data: medicineData } = await sellerService.getSellerMedicine(
-    undefined,
-    { cache: "no-store" },
-  );
-  const medicines = medicineData?.data?.slice(0, 6) || [];
+  const categories: any[] = categoryData?.data || [];
+  const medicines: any[] = medicineData?.data || [];
+
+  // Slice for each section
+  const heroMedicines = medicines.slice(0, 3);   // top 3 for hero carousel
+  const featuredMedicines = medicines.slice(0, 8); // top 8 for featured grid
 
   return (
-    <div className="min-h-screen">
-      <section>
-        <HeroCarousel />
-      </section>
+    <div className="flex flex-col w-full overflow-x-hidden">
+      
+      {/* 1. Hero / Carousel — top 3 real medicines */}
+      <HeroCarousel medicines={heroMedicines} />
 
-      <section className="py-16 px-6 max-w-6xl mx-auto">
-        <h2 className="text-2xl font-bold mb-8 text-center">
-          Browse by Category
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {categories.map((cat: any) => (
-            <Link
-              key={cat.id}
-              href={`/shop?categoryId=${cat.id}`}
-              className="border rounded-xl p-4 text-center hover:bg-primary/5 hover:border-primary transition-all"
-            >
-              <p className="font-medium">{cat.name}</p>
-            </Link>
-          ))}
-        </div>
-      </section>
+      {/* 2. Statistics — real counts from backend */}
+      <Statistics
+        medicineCount={medicines.length}
+        categoryCount={categories.length}
+      />
 
-      <section className="py-16 px-6 max-w-6xl mx-auto">
-        <h2 className="text-2xl font-bold mb-8 text-center">
-          Featured Medicines
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {medicines.map((medicine: any) => (
-            <Link
-              key={medicine.id}
-              href={`/shop/${medicine.id}`}
-              className="border rounded-xl overflow-hidden hover:shadow-md transition-all"
-            >
-              <img
-                src={medicine.image || "https://placehold.co/400x300"}
-                alt={medicine.name}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="font-semibold">{medicine.name}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {medicine.manufacturer}
-                </p>
-                <p className="text-primary font-bold mt-2">৳{medicine.price}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-        <div className="text-center mt-8">
-          <Button asChild variant="outline" size="lg">
-            <Link href="/shop">View All Medicines</Link>
-          </Button>
-        </div>
-      </section>
-      <section>
-        <HowItWorks />
-      </section>
+      {/* 3. Categories — real categories from backend */}
+      <CategoriesSection categories={categories} />
 
-      <section>
-        <WhyChooseUs />
-      </section>
+      {/* 4. Offer Highlights — uses real medicine data for deal cards */}
+      <OfferHighlights medicines={medicines} />
 
-      <footer className="border-t bg-muted/20 py-12 px-6">
-        <Footer />
-      </footer>
+      {/* 5. Featured Products — real medicines */}
+      <FeaturedMedicines medicines={featuredMedicines} />
+
+      {/* 6. How It Works */}
+      <HowItWorks />
+
+      {/* 7. Why Choose Us */}
+      <WhyChooseUs />
+
+      {/* 8. Latest Blogs — static content (no blog API available on backend) */}
+      <LatestBlogs />
+
+      {/* 9. Testimonials — static content (no reviews API for homepage) */}
+      <Testimonials />
+
+      {/* 10. FAQ */}
+      <FAQSection />
+
+      {/* 11. Newsletter */}
+      <NewsletterSection />
+
     </div>
   );
 }

@@ -7,10 +7,14 @@ export const env = createEnv({
     AUTH_URL: z.url(),
     API_URL: z.url(),
   },
+  client: {
+    NEXT_PUBLIC_STRIPE_PUBLIC_KEY: z.string().min(1),
+  },
   runtimeEnv: {
     BACKEND_URL: process.env.BACKEND_URL,
     FRONTEND_URL: process.env.FRONTEND_URL,
     AUTH_URL: process.env.AUTH_URL,
     API_URL: process.env.API_URL,
+    NEXT_PUBLIC_STRIPE_PUBLIC_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY,
   },
 });

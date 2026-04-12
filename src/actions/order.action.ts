@@ -7,6 +7,7 @@ import { sellerService } from "@/services/seller.service";
 export const createOrder = async (orderData: {
   address: string;
   paymentMethod: string;
+  transactionId?: string;
   orderItems: {
     medicineId: string;
     quantity: number;
@@ -28,6 +29,7 @@ export const createOrder = async (orderData: {
       body: JSON.stringify({
         address: orderData.address,
         paymentMethod: orderData.paymentMethod,
+        transactionId: orderData.transactionId,
         items: orderData.orderItems,
       }),
     });

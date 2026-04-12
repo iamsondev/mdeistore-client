@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -15,29 +14,36 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { ModeToggle } from "@/components/layout/ModeToggle";
+import { customerService } from "@/services/customer.service";
 
 export default async function DashboardLayout({
   admin,
   seller,
   customer,
+  moderator,
+  deliveryAgent,
 }: {
   children: React.ReactNode;
   admin: React.ReactNode;
   seller: React.ReactNode;
   customer: React.ReactNode;
+  moderator: React.ReactNode;
+  deliveryAgent: React.ReactNode;
 }) {
-  const cookieStore = await cookies();
-
-  const res = await fetch(
-    "https://medistore-server-fawn.vercel.app/api/auth/get-session",
-    {
-      headers: { cookie: cookieStore.toString() },
-      cache: "no-store",
-    },
-  );
-
-  const session = await res.json();
+  const { data: session } = await customerService.getsession();
   const role = session?.user?.role;
+  
+  console.log("Current user role in layout:", role);
+
+
+
+  const roleLabels: Record<string, string> = {
+    ADMIN: "👑 Admin",
+    SELLER: "🏪 Seller",
+    CUSTOMER: "🛍️ Customer",
+    MODERATOR: "🛡️ Moderator",
+    DELIVERY_AGENT: "🚴 Delivery Agent",
+  };
 
   return (
     <SidebarProvider>
@@ -56,7 +62,7 @@ export default async function DashboardLayout({
               </BreadcrumbItem>
               <BreadcrumbSeparator className="hidden md:block" />
               <BreadcrumbItem>
-                <BreadcrumbPage>{role}</BreadcrumbPage>
+                <BreadcrumbPage>{roleLabels[role] || role}</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
@@ -69,6 +75,8 @@ export default async function DashboardLayout({
           {role === "ADMIN" && admin}
           {role === "SELLER" && seller}
           {role === "CUSTOMER" && customer}
+          {role === "MODERATOR" && moderator}
+          {role === "DELIVERY_AGENT" && deliveryAgent}
         </div>
       </SidebarInset>
     </SidebarProvider>

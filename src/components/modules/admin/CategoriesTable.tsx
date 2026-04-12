@@ -13,6 +13,9 @@ import { toast } from "sonner";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+import { AddCategoryForm } from "./AddCategoryForm";
+import { AnimatePresence, motion } from "framer-motion";
+
 export function CategoriesTable({ categories }: { categories: any[] }) {
   const [list, setList] = useState(categories);
   const router = useRouter();
@@ -20,62 +23,13 @@ export function CategoriesTable({ categories }: { categories: any[] }) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editName, setEditName] = useState("");
   const [editDesc, setEditDesc] = useState("");
-  const [newName, setNewName] = useState("");
-  const [newDesc, setNewDesc] = useState("");
-  const [newImage, setNewImage] = useState("");
   const [showAdd, setShowAdd] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setIsUploading(true);
-    const formData = new FormData();
-    formData.append("image", file);
-
-    try {
-      const res = await fetch(
-        `https://api.imgbb.com/1/upload?key=1c96f8bc1bac0aa693019fe816afdafc`,
-        { method: "POST", body: formData },
-      );
-      const data = await res.json();
-      if (data.success) {
-        setNewImage(data.data.url);
-        toast.success("Image uploaded!");
-      } else {
-        toast.error("Image upload failed!");
-      }
-    } catch {
-      toast.error("Failed to upload image!");
-    } finally {
-      setIsUploading(false);
-    }
-  };
-
-  const handleAdd = async () => {
-    if (!newName.trim()) return;
-    if (!newImage) {
-      toast.error("Please upload an image!");
-      return;
-    }
-    const toastId = toast.loading("Adding...");
-    const res = await createCategory(newName, newDesc, newImage);
-    if (res?.error) {
-      toast.error("Failed to add", { id: toastId });
-      return;
-    }
-    toast.success("Category added!", { id: toastId });
-
-    const newCategory = res.data?.data || res.data;
+  const handleAddSuccess = (newCategory: any) => {
     if (newCategory) {
       setList((prev) => [...prev, newCategory]);
+      setShowAdd(false);
     }
-
-    setNewName("");
-    setNewDesc("");
-    setNewImage("");
-    setShowAdd(false);
   };
 
   const handleEdit = (cat: any) => {
@@ -101,7 +55,8 @@ export function CategoriesTable({ categories }: { categories: any[] }) {
   };
 
   const handleDelete = (id: string) => {
-    toast("Delete this category?", {
+    toast("Remove this taxonomy?", {
+      description: "This will affect product classification.",
       action: {
         label: "Delete",
         onClick: async () => {
@@ -116,105 +71,61 @@ export function CategoriesTable({ categories }: { categories: any[] }) {
           router.refresh();
         },
       },
-      cancel: { label: "Cancel", onClick: () => {} },
+      cancel: { label: "Keep", onClick: () => {} },
     });
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-end">
-        <Button onClick={() => setShowAdd(!showAdd)} size="sm">
-          <Plus className="h-4 w-4 mr-2" /> Add Category
-        </Button>
+    <div className="space-y-8 p-4">
+      <div className="flex items-center justify-between">
+        <div className="space-y-1">
+          <h2 className="text-2xl font-black tracking-tight flex items-center gap-2">
+             <div className="h-6 w-1.5 bg-primary rounded-full" />
+             Collection Schema
+          </h2>
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest px-4">
+             Admin Oversight Panel
+          </p>
+        </div>
+        {!showAdd && (
+          <Button 
+            onClick={() => setShowAdd(true)} 
+            className="rounded-2xl h-11 px-6 font-bold shadow-lg shadow-primary/10 hover:scale-[1.02] active:scale-[0.98] transition-all"
+          >
+            <Plus className="h-4 w-4 mr-2" /> Add Category
+          </Button>
+        )}
       </div>
 
-      {showAdd && (
-        <div className="border rounded-xl p-4 flex flex-col gap-3 bg-muted/30">
-          <div className="flex gap-3 items-center">
-            <Input
-              placeholder="Category name"
-              value={newName}
-              onChange={(e) => setNewName(e.target.value)}
-              className="flex-1"
-            />
-            <Input
-              placeholder="Description (optional)"
-              value={newDesc}
-              onChange={(e) => setNewDesc(e.target.value)}
-              className="flex-1"
-            />
-          </div>
+      <AnimatePresence>
+        {showAdd && (
+          <AddCategoryForm 
+            onSuccess={handleAddSuccess} 
+            onCancel={() => setShowAdd(false)} 
+          />
+        )}
+      </AnimatePresence>
 
-          <div className="flex gap-3 items-center">
-            {newImage ? (
-              <div className="relative w-16 h-16 border rounded-lg overflow-hidden group">
-                <Image
-                  src={newImage}
-                  alt="Category Preview"
-                  fill
-                  className="object-cover"
-                />
-                <button
-                  type="button"
-                  onClick={() => setNewImage("")}
-                  className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity text-xs"
-                >
-                  ✕
-                </button>
-              </div>
-            ) : (
-              <Input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                disabled={isUploading}
-                className="flex-1"
-              />
-            )}
-            {isUploading && (
-              <p className="text-sm text-blue-500 animate-pulse">
-                Uploading...
-              </p>
-            )}
-          </div>
-
-          <div className="flex gap-2 justify-end">
-            <Button size="sm" onClick={handleAdd} disabled={isUploading}>
-              <Check className="h-4 w-4" />
-            </Button>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => {
-                setShowAdd(false);
-                setNewImage("");
-              }}
-            >
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      )}
-
-      <div className="border rounded-xl overflow-hidden">
+      <div className="border border-muted-foreground/10 rounded-[2rem] overflow-hidden bg-card/30 backdrop-blur-sm shadow-xl shadow-black/5">
         <table className="w-full text-sm">
-          <thead className="bg-muted/50 border-b">
+          <thead className="bg-muted/50 border-b border-muted-foreground/10">
             <tr>
-              <th className="text-left p-4 font-semibold">Image</th>
-              <th className="text-left p-4 font-semibold">Name</th>
-              <th className="text-left p-4 font-semibold">Description</th>
-              <th className="text-right p-4 font-semibold">Actions</th>
+              <th className="text-left p-6 font-black uppercase tracking-widest text-[10px] text-muted-foreground">Representation</th>
+              <th className="text-left p-6 font-black uppercase tracking-widest text-[10px] text-muted-foreground">Designation</th>
+              <th className="text-left p-6 font-black uppercase tracking-widest text-[10px] text-muted-foreground">Scope</th>
+              <th className="text-right p-6 font-black uppercase tracking-widest text-[10px] text-muted-foreground">Operations</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-muted-foreground/5">
             {list.map((cat) => (
-              <tr
+              <motion.tr
+                layout
                 key={cat.id}
-                className="border-b last:border-b-0 hover:bg-muted/30"
+                className="group hover:bg-primary/[0.02] transition-colors"
               >
-                <td className="p-4">
+                <td className="p-6">
                   {cat.image && (
-                    <div className="relative w-10 h-10 rounded-md overflow-hidden">
+                    <div className="relative w-12 h-12 rounded-2xl overflow-hidden shadow-md group-hover:scale-110 transition-transform duration-500">
                       <Image
                         src={cat.image}
                         alt={cat.name}
@@ -224,43 +135,45 @@ export function CategoriesTable({ categories }: { categories: any[] }) {
                     </div>
                   )}
                 </td>
-                <td className="p-4">
+                <td className="p-6">
                   {editingId === cat.id ? (
                     <Input
                       value={editName}
                       onChange={(e) => setEditName(e.target.value)}
-                      className="h-8"
+                      className="h-10 bg-muted/50 border-none rounded-xl"
                     />
                   ) : (
-                    cat.name
+                    <span className="font-bold text-base">{cat.name}</span>
                   )}
                 </td>
-                <td className="p-4">
+                <td className="p-6 max-w-[300px]">
                   {editingId === cat.id ? (
                     <Input
                       value={editDesc}
                       onChange={(e) => setEditDesc(e.target.value)}
-                      className="h-8"
+                      className="h-10 bg-muted/50 border-none rounded-xl"
                     />
                   ) : (
-                    cat.description || "-"
+                    <p className="text-muted-foreground line-clamp-1 italic text-xs">
+                      {cat.description || "No description provided."}
+                    </p>
                   )}
                 </td>
-                <td className="p-4">
-                  <div className="flex justify-end gap-2">
+                <td className="p-6">
+                  <div className="flex justify-end gap-3">
                     {editingId === cat.id ? (
                       <>
                         <Button
-                          size="icon"
-                          className="h-8 w-8"
+                          size="sm"
+                          className="h-10 w-10 rounded-xl"
                           onClick={() => handleUpdate(cat.id)}
                         >
                           <Check className="h-4 w-4" />
                         </Button>
                         <Button
-                          size="icon"
-                          variant="outline"
-                          className="h-8 w-8"
+                          size="sm"
+                          variant="ghost"
+                          className="h-10 w-10 rounded-xl"
                           onClick={() => setEditingId(null)}
                         >
                           <X className="h-4 w-4" />
@@ -270,16 +183,16 @@ export function CategoriesTable({ categories }: { categories: any[] }) {
                       <>
                         <Button
                           size="icon"
-                          variant="outline"
-                          className="h-8 w-8"
+                          variant="ghost"
+                          className="h-10 w-10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity hover:bg-blue-50 hover:text-blue-600"
                           onClick={() => handleEdit(cat)}
                         >
                           <Edit className="h-4 w-4" />
                         </Button>
                         <Button
                           size="icon"
-                          variant="destructive"
-                          className="h-8 w-8"
+                          variant="ghost"
+                          className="h-10 w-10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity hover:bg-rose-50 hover:text-rose-600"
                           onClick={() => handleDelete(cat.id)}
                         >
                           <Trash2 className="h-4 w-4" />
@@ -288,16 +201,20 @@ export function CategoriesTable({ categories }: { categories: any[] }) {
                     )}
                   </div>
                 </td>
-              </tr>
+              </motion.tr>
             ))}
           </tbody>
         </table>
         {list.length === 0 && (
-          <div className="text-center py-20 text-muted-foreground">
-            No categories found.
+          <div className="text-center py-32 space-y-4">
+             <div className="inline-flex p-4 rounded-3xl bg-muted/50 text-muted-foreground italic">
+                Empty Schema
+             </div>
+             <p className="text-sm font-medium text-muted-foreground/60">No taxonomies found in the current environment.</p>
           </div>
         )}
       </div>
     </div>
   );
 }
+

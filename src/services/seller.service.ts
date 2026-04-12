@@ -15,6 +15,11 @@ interface getMedicineParams {
   limit?: string;
   categoryId?: string;
   sellerId?: string;
+  minPrice?: string;
+  maxPrice?: string;
+  sortBy?: string;
+  sortOrder?: string;
+  [key: string]: string | undefined;
 }
 
 export const sellerService = {

@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { updateUserStatus } from "@/actions/admin.action";
+import { updateUserStatus, updateUserRole } from "@/actions/admin.action";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -25,6 +25,17 @@ export function UsersTable({ users }: { users: any[] }) {
       return;
     }
     toast.success("Status updated!", { id: toastId });
+    router.refresh();
+  };
+
+  const handleRoleUpdate = async (id: string, role: string) => {
+    const toastId = toast.loading("Updating role...");
+    const res = await updateUserRole(id, role);
+    if (res?.error) {
+      toast.error("Failed to update role", { id: toastId });
+      return;
+    }
+    toast.success("Role updated!", { id: toastId });
     router.refresh();
   };
 
@@ -46,7 +57,18 @@ export function UsersTable({ users }: { users: any[] }) {
               <TableCell className="font-medium">{user.name}</TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>
-                <Badge variant="outline">{user.role}</Badge>
+                <select
+                  className="text-sm border rounded px-2 py-1 bg-background"
+                  defaultValue={user.role}
+                  onChange={(e) => handleRoleUpdate(user.id, e.target.value)}
+                  disabled={user.role === "ADMIN"}
+                >
+                  <option value="CUSTOMER">CUSTOMER</option>
+                  <option value="SELLER">SELLER</option>
+                  <option value="MODERATOR">MODERATOR</option>
+                  <option value="DELIVERY_AGENT">DELIVERY_AGENT</option>
+                  <option value="ADMIN" disabled>ADMIN</option>
+                </select>
               </TableCell>
               <TableCell>
                 <Badge
