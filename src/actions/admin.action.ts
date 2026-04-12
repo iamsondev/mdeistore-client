@@ -23,7 +23,7 @@ export const updateAdminOrderStatus = async (id: string, status: string, deliver
 
 export const updateDeliveryOrderStatus = async (id: string, status: string) => {
   const res = await adminService.updateOrderStatus(id, status);
-  revalidateTag("assigned-orders");
+  revalidatePath("/delivery-dashboard");
   revalidatePath("/delivery-dashboard");
   revalidatePath("/delivery-dashboard/assigned-orders");
   return res;
