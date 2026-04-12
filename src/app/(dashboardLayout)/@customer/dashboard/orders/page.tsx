@@ -1,6 +1,6 @@
 import { customerService } from "@/services/customer.service";
 import Link from "next/link";
-import { ShoppingBag, ChevronRight, Star, Clock, MapPin, CreditCard } from "lucide-react";
+import { ShoppingBag, ChevronRight, Star, Clock, MapPin, CreditCard, Package } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 

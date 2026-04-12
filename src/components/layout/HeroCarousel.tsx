@@ -110,7 +110,13 @@ const trustBadges = [
   { icon: Star, label: "4.9 Rated" },
 ];
 
-export function HeroCarousel() {
+import { Medicine } from "@/types";
+
+interface HeroCarouselProps {
+  medicines?: Medicine[];
+}
+
+export function HeroCarousel({ medicines }: HeroCarouselProps) {
   return (
     <div className="relative overflow-hidden">
       <Carousel

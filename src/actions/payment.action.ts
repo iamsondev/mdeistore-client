@@ -68,3 +68,36 @@ export const verifyPayment = async (sessionId: string) => {
     };
   }
 };
+export const createPaymentIntent = async (amount: number) => {
+  try {
+    const cookieStore = await cookies();
+
+    const res = await fetch(`${env.API_URL}/api/payment/create-intent`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieStore
+          .getAll()
+          .map((c) => `${c.name}=${c.value}`)
+          .join("; "),
+      },
+      body: JSON.stringify({ amount }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      return {
+        data: null,
+        error: { message: data.message || "Could not create payment intent" },
+      };
+    }
+
+    return { data: data.data, error: null };
+  } catch (err) {
+    return {
+      data: null,
+      error: { message: "Something went wrong" },
+    };
+  }
+};
