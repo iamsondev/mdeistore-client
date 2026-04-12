@@ -20,9 +20,7 @@ export function DeliverOrderButton({ orderId, currentStatus }: DeliverOrderButto
     const toastId = toast.loading("Finalizing delivery...");
     
     try {
-      // If the order is still PENDING, we might need to set it to SHIPPED first 
-      // as many backends don't allow PENDING -> DELIVERED direct transition for agents
-      if (currentStatus?.toUpperCase() === "PENDING") {
+      if (currentStatus?.toUpperCase() === "PENDING" || currentStatus?.toUpperCase() === "PLACED") {
         await updateDeliveryOrderStatus(orderId, "SHIPPED");
       }
 

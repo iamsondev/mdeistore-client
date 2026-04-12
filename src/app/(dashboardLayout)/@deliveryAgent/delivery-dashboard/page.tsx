@@ -13,7 +13,7 @@ export default async function DeliveryDashboardPage() {
   const assignedOrders: any[] = assignmentsRes?.data?.data || assignmentsRes?.data || [];
 
   const stats = {
-    assignedToday: assignedOrders.filter(o => o.status === "PENDING" || o.status === "SHIPPED").length,
+    assignedToday: assignedOrders.filter(o => o.status === "PLACED" || o.status === "PENDING" || o.status === "SHIPPED").length,
     inTransit: assignedOrders.filter(o => o.status === "SHIPPED").length,
     deliveredToday: assignedOrders.filter(o => o.status === "DELIVERED").length,
     recentAssignments: assignedOrders.filter(o => o.status?.toUpperCase() !== "DELIVERED").slice(0, 5),

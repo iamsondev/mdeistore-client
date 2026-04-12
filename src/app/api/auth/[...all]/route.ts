@@ -19,7 +19,7 @@ async function handler(req: Request): Promise<Response> {
   const headers = new Headers(req.headers);
   // Prevent ERR_CONTENT_DECODING_FAILED by removing compression headers
   headers.delete("accept-encoding");
-  
+
   headers.set("x-forwarded-host", req.headers.get("host") ?? "");
   headers.set("x-forwarded-proto", url.protocol.replace(":", ""));
   headers.set("x-original-origin", FRONTEND_URL);
@@ -42,18 +42,18 @@ async function handler(req: Request): Promise<Response> {
   responseHeaders.delete("content-length");
 
   const location = responseHeaders.get("location");
-  
+
   if (location) {
     console.log("Original Redirect Location:", location);
-    
+
     // Hardcoded logic to force redirect back to frontend if it points to backend port
     let rewrittenLocation = location;
-    
+
     const backendOrigin = new URL(BACKEND_AUTH_URL).origin;
     if (rewrittenLocation.startsWith(backendOrigin)) {
       rewrittenLocation = rewrittenLocation.replace(backendOrigin, FRONTEND_URL);
     }
-    
+
     // Also catch cases where it specifically uses localhost:3000
     if (rewrittenLocation.includes("localhost:3000")) {
       rewrittenLocation = rewrittenLocation.replace("localhost:3000", "localhost:5000");

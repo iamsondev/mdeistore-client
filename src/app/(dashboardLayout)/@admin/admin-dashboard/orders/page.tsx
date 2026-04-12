@@ -13,9 +13,9 @@ export default async function AdminOrdersPage() {
   const orders: any[] = ordersData?.data || [];
   const agents: any[] = agentsData?.data || [];
 
-  const pending = orders.filter((o) => o.status === "PENDING").length;
+  const pending = orders.filter((o) => o.status === "PLACED" || o.status === "PENDING").length;
   const delivered = orders.filter((o) => o.status === "DELIVERED").length;
-  const cancelled = orders.filter((o) => o.status === "CANCELLED").length;
+  const cancelled = orders.filter((o) => o.status === "CANCELED").length;
   const totalRevenue = orders
     .filter((o) => o.status === "DELIVERED")
     .reduce((sum, o) => sum + Number(o.totalAmount || 0), 0);

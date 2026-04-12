@@ -18,6 +18,8 @@ export const updateUserRole = async (id: string, role: string) => {
 export const updateAdminOrderStatus = async (id: string, status: string, deliveryAgentId?: string) => {
   const res = await adminService.updateOrderStatus(id, status, deliveryAgentId);
   revalidatePath("/admin-dashboard/orders");
+  revalidatePath("/delivery-dashboard");
+  revalidatePath("/delivery-dashboard/assigned-orders");
   return res;
 };
 
