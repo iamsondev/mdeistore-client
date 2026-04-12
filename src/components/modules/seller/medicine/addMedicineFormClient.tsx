@@ -126,19 +126,26 @@ export function AddMedicineFormClient({ categories }: Props) {
       toast.error("Please enter a medicine name first!");
       return;
     }
+    
     setIsGenerating(true);
     const toastId = toast.loading("AI is generating description...");
+    
     try {
       const selectedCategory = categories.find(c => c.id === categoryId);
-      const res = await generateAIDescriptionAction(nameValue, selectedCategory?.name || "");
+      const categoryName = selectedCategory?.name || "Medicine";
       
+      const res = await generateAIDescriptionAction(nameValue, categoryName);
+      
+      // The response structure from adminService is { data: { success, data: description }, error }
       if (res?.data?.success) {
         field.handleChange(res.data.data);
         toast.success("Description generated beautifully!", { id: toastId });
       } else {
-        toast.error(res?.error?.message || "Failed to generate.", { id: toastId });
+        const errorMsg = res?.error?.message || res?.data?.message || "Failed to generate.";
+        toast.error(errorMsg, { id: toastId });
       }
     } catch(err) {
+      console.error("AI Action Error:", err);
       toast.error("AI service error. Please try again.", { id: toastId });
     } finally {
       setIsGenerating(false);
