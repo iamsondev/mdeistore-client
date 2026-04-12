@@ -1,4 +1,4 @@
-import { Footer } from "@/components/layout/footer";
+import Footer from "@/components/layout/footer";
 import Navbar from "@/components/layout/navbar";
 import { HealthBot } from "@/components/modules/ai/HealthBot";
 

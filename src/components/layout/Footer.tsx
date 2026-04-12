@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin, Send } from "lucide-react";
+import { Facebook, Instagram, Twitter, Mail, Phone, MapPin, Send, Linkedin, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -51,14 +51,17 @@ const Footer = () => {
               delivering wellness to your doorstep with every order.
             </p>
             <div className="flex items-center gap-4">
-              <Link href="https://facebook.com/medistore" target="_blank" className="h-10 w-10 flex items-center justify-center bg-background rounded-full hover:bg-primary hover:text-white transition-all shadow-sm border border-border">
+              <Link href="https://www.facebook.com/sondip.kumar.750" target="_blank" className="h-10 w-10 flex items-center justify-center bg-background rounded-full hover:bg-primary hover:text-white transition-all shadow-sm border border-border">
                 <Facebook className="h-5 w-5" />
               </Link>
-              <Link href="https://twitter.com/medistore" target="_blank" className="h-10 w-10 flex items-center justify-center bg-background rounded-full hover:bg-primary hover:text-white transition-all shadow-sm border border-border">
+              <Link href="https://x.com/SonDIPX" target="_blank" className="h-10 w-10 flex items-center justify-center bg-background rounded-full hover:bg-primary hover:text-white transition-all shadow-sm border border-border">
                 <Twitter className="h-5 w-5" />
               </Link>
-              <Link href="https://instagram.com/medistore" target="_blank" className="h-10 w-10 flex items-center justify-center bg-background rounded-full hover:bg-primary hover:text-white transition-all shadow-sm border border-border">
-                <Instagram className="h-5 w-5" />
+              <Link href="https://www.linkedin.com/in/sondip-kumar-8637b9179/" target="_blank" className="h-10 w-10 flex items-center justify-center bg-background rounded-full hover:bg-primary hover:text-white transition-all shadow-sm border border-border">
+                <Linkedin className="h-5 w-5" />
+              </Link>
+              <Link href="https://github.com/iamsondev" target="_blank" className="h-10 w-10 flex items-center justify-center bg-background rounded-full hover:bg-primary hover:text-white transition-all shadow-sm border border-border">
+                <Github className="h-5 w-5" />
               </Link>
             </div>
           </div>
@@ -144,4 +147,4 @@ const Footer = () => {
   );
 };
 
-export { Footer };
+export default Footer;
