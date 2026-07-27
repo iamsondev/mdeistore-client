@@ -33,6 +33,11 @@ export const metadata: Metadata = {
   description:
     "Authentic medicines, supplements & healthcare essentials delivered to your doorstep with care and precision.",
   keywords: ["pharmacy", "medicine", "healthcare", "online pharmacy", "medistore"],
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     title: "Medistore | Your Trusted Online Pharmacy",
     description: "Authentic medicines delivered to your doorstep",
