@@ -1,4 +1,3 @@
-import { customerService } from "@/services/customer.service";
 import { NextRequest, NextResponse } from "next/server";
 
 const ROLE_DASHBOARDS: Record<string, string> = {
@@ -19,12 +18,22 @@ const PROTECTED_PREFIXES = [
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
+  const cookieHeader = request.headers.get("cookie") || "";
+  const authUrl =
+    process.env.AUTH_URL ||
+    `${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3000"}/api/auth`;
 
-  // ─── 1. Fetch session ─────────────────────────────────────────────────────
+  // ─── 1. Fetch session safely in Edge Middleware ───────────────────────────
   let role: string | null = null;
   try {
-    const { data } = await customerService.getsession();
-    role = data?.user?.role ?? null;
+    const res = await fetch(`${authUrl}/get-session`, {
+      headers: { Cookie: cookieHeader },
+      cache: "no-store",
+    });
+    if (res.ok) {
+      const session = await res.json();
+      role = session?.user?.role ?? null;
+    }
   } catch {
     role = null;
   }

@@ -81,7 +81,7 @@ export function OfferHighlights({ medicines }: { medicines: any[] }) {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 }}
               viewport={{ once: true }}
-              className="group flex-1 relative rounded-[2rem] overflow-hidden bg-secondary border-2 border-primary/20 shadow-xl"
+              className="group flex-1 relative rounded-[2rem] overflow-hidden bg-muted border-2 border-primary/20 shadow-xl"
             >
               <div className="relative p-10 flex items-center gap-6 h-full">
                 {secondaryMedicine?.image ? (

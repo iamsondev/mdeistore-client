@@ -29,12 +29,12 @@ const slides = [
     ],
     cta: { label: "Shop Now", href: "/shop?category=prescription" },
     ctaSecondary: { label: "View Catalog", href: "/shop" },
-    image: "https://i.ibb.co.com/6RWxnRby/pexels-anhdanghihi-16398464.jpg",
-    accentColor: "hsl(221, 83%, 53%)",
-    gradientFrom: "from-blue-950",
-    gradientVia: "via-blue-900",
-    chipColor: "bg-blue-500/20 border-blue-400/30 text-blue-300",
-    badgeColor: "bg-blue-500",
+    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=900&q=80",
+    accentColor: "#2FA98C", // Teal Green
+    gradientFrom: "from-[#060D0B]", // Dark forest base 1
+    gradientVia: "via-[#0F241F]",   // Dark forest base 2
+    chipColor: "bg-[#2FA98C]/15 border-[#2FA98C]/30 text-[#2FA98C]",
+    badgeColor: "bg-[#2FA98C]",
   },
   {
     id: 2,
@@ -51,12 +51,12 @@ const slides = [
     ],
     cta: { label: "Shop Now", href: "/shop?category=otc" },
     ctaSecondary: { label: "View Catalog", href: "/shop" },
-    image: "https://i.ibb.co.com/5Xth5T8t/pexels-artempodrez-5878514.jpg",
-    accentColor: "hsl(142, 71%, 45%)",
-    gradientFrom: "from-emerald-950",
-    gradientVia: "via-emerald-900",
-    chipColor: "bg-emerald-500/20 border-emerald-400/30 text-emerald-300",
-    badgeColor: "bg-emerald-500",
+    image: "https://images.unsplash.com/photo-1550572017-edd951b55104?w=900&q=80",
+    accentColor: "#FF6B35", // Contrast Orange
+    gradientFrom: "from-[#0F0A07]", // Dark amber base 1
+    gradientVia: "via-[#251610]",   // Dark amber base 2
+    chipColor: "bg-[#FF6B35]/15 border-[#FF6B35]/30 text-[#FF6B35]",
+    badgeColor: "bg-[#FF6B35]",
   },
   {
     id: 3,
@@ -73,12 +73,12 @@ const slides = [
     ],
     cta: { label: "Shop Now", href: "/shop?category=wellness" },
     ctaSecondary: { label: "View Catalog", href: "/shop" },
-    image: "https://i.ibb.co.com/XZ6c0DXT/pexels-lucas-guimaraes-bueno-258458556-13060576.jpg",
-    accentColor: "hsl(330, 81%, 60%)",
-    gradientFrom: "from-rose-950",
-    gradientVia: "via-rose-900",
-    chipColor: "bg-rose-500/20 border-rose-400/30 text-rose-300",
-    badgeColor: "bg-rose-500",
+    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=900&q=80",
+    accentColor: "#2FA98C", // Teal Green
+    gradientFrom: "from-[#060D0B]",
+    gradientVia: "via-[#0F241F]",
+    chipColor: "bg-[#2FA98C]/15 border-[#2FA98C]/30 text-[#2FA98C]",
+    badgeColor: "bg-[#2FA98C]",
   },
   {
     id: 4,
@@ -95,12 +95,12 @@ const slides = [
     ],
     cta: { label: "Book Now", href: "/consult" },
     ctaSecondary: { label: "Learn More", href: "/consult/how-it-works" },
-    image: "https://i.ibb.co.com/prk5W6Jt/pexels-n-voitkevich-7615570.jpg",
-    accentColor: "hsl(262, 83%, 65%)",
-    gradientFrom: "from-violet-950",
-    gradientVia: "via-violet-900",
-    chipColor: "bg-violet-500/20 border-violet-400/30 text-violet-300",
-    badgeColor: "bg-violet-600",
+    image: "https://images.unsplash.com/photo-1651008376811-b90baee60c1f?w=900&q=80",
+    accentColor: "#FF6B35", // Contrast Orange
+    gradientFrom: "from-[#0F0A07]",
+    gradientVia: "via-[#251610]",
+    chipColor: "bg-[#FF6B35]/15 border-[#FF6B35]/30 text-[#FF6B35]",
+    badgeColor: "bg-[#FF6B35]",
   },
 ];
 
@@ -130,29 +130,23 @@ export function HeroCarousel({ medicines }: HeroCarouselProps) {
             return (
               <CarouselItem key={slide.id}>
                 <div
-                  className={`relative h-[65vh] flex flex-col justify-center overflow-hidden bg-gradient-to-br ${slide.gradientFrom} ${slide.gradientVia} to-gray-950`}
+                  className={`relative h-[65vh] flex flex-col justify-center overflow-hidden bg-gradient-to-br ${slide.gradientFrom} ${slide.gradientVia} to-black`}
                 >
-                  {/* Background texture */}
+                  {/* Background texture wrapper */}
                   <div
-                    className="absolute inset-0 opacity-[0.03]"
+                    className="absolute inset-0 opacity-[0.02]"
                     style={{
                       backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
                     }}
                   />
 
-                  {/* Radial glow */}
+                  {/* Soft Radial Glow */}
                   <div
-                    className="absolute top-1/3 left-1/4 w-[600px] h-[600px] rounded-full blur-[120px] opacity-20 pointer-events-none"
+                    className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full blur-[100px] opacity-25 pointer-events-none"
                     style={{ backgroundColor: slide.accentColor }}
                   />
 
-                  {/* Right glow behind image */}
-                  <div
-                    className="absolute top-1/2 right-[15%] -translate-y-1/2 w-[400px] h-[400px] rounded-full blur-[80px] opacity-30 pointer-events-none"
-                    style={{ backgroundColor: slide.accentColor }}
-                  />
-
-                  <div className="container mx-auto px-6 md:px-16 relative z-10 flex flex-row items-center justify-between gap-8 h-full">
+                  <div className="container mx-auto px-6 md:px-16 relative z-10 flex flex-row items-center justify-between gap-12 h-full">
 
                     {/* Left Content */}
                     <motion.div
@@ -160,14 +154,14 @@ export function HeroCarousel({ medicines }: HeroCarouselProps) {
                       initial={{ opacity: 0, x: -40 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                      className="max-w-lg space-y-4 flex-1"
+                      className="max-w-lg space-y-5 flex-1"
                     >
                       {/* Eyebrow */}
                       <motion.p
                         initial={{ opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.1 }}
-                        className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/40"
+                        className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50"
                       >
                         {slide.eyebrow}
                       </motion.p>
@@ -177,9 +171,9 @@ export function HeroCarousel({ medicines }: HeroCarouselProps) {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-semibold ${slide.chipColor}`}
+                        className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-bold leading-none ${slide.chipColor}`}
                       >
-                        <TagIcon className="h-3 w-3" />
+                        <TagIcon className="h-3.5 w-3.5" />
                         {slide.tag}
                       </motion.div>
 
@@ -189,9 +183,9 @@ export function HeroCarousel({ medicines }: HeroCarouselProps) {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.25 }}
                       >
-                        <h1 className="text-3xl md:text-[2.75rem] font-black leading-[1.1] tracking-tight text-white">
+                        <h1 className="text-3xl md:text-[2.75rem] font-black leading-[1.1] tracking-tight text-white uppercase">
                           {slide.headline}{" "}
-                          <span className="block" style={{ color: slide.accentColor }}>
+                          <span className="block italic" style={{ color: slide.accentColor }}>
                             {slide.highlight}
                           </span>
                         </h1>
@@ -202,22 +196,22 @@ export function HeroCarousel({ medicines }: HeroCarouselProps) {
                         initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.35 }}
-                        className="text-sm text-white/50 leading-relaxed max-w-sm"
+                        className="text-sm text-white/60 leading-relaxed max-w-sm font-medium"
                       >
                         {slide.sub}
                       </motion.p>
 
-                      {/* Stats Row */}
+                      {/* Glassmorphic Stats Row */}
                       <motion.div
                         initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
-                        className="flex items-center gap-5"
+                        className="flex items-center gap-6 px-6 py-3.5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md w-fit"
                       >
                         {slide.stats.map((stat, i) => (
                           <div key={i} className="flex flex-col">
-                            <span className="text-lg font-black text-white">{stat.value}</span>
-                            <span className="text-[10px] text-white/35 font-medium uppercase tracking-wider">{stat.label}</span>
+                            <span className="text-lg font-black text-white leading-none mb-1">{stat.value}</span>
+                            <span className="text-[9px] text-white/40 font-bold uppercase tracking-wider">{stat.label}</span>
                           </div>
                         ))}
                       </motion.div>
@@ -226,79 +220,70 @@ export function HeroCarousel({ medicines }: HeroCarouselProps) {
                       <motion.div
                         initial={{ opacity: 0, y: 12 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.5 }}
+                        transition={{ duration: 0.6, delay: 0.45 }}
                         className="flex flex-wrap items-center gap-3 pt-1"
                       >
                         <Link
                           href={slide.cta.href}
-                          className="group inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-white transition-all duration-300 hover:gap-3 active:scale-95"
+                          className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-bold text-white transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl"
                           style={{
                             backgroundColor: slide.accentColor,
-                            boxShadow: `0 0 24px ${slide.accentColor}44`,
+                            boxShadow: `0 8px 30px ${slide.accentColor}33`,
                           }}
                         >
                           {slide.cta.label}
-                          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                         </Link>
 
                         <Link
                           href={slide.ctaSecondary.href}
-                          className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-white/60 border border-white/10 hover:border-white/25 hover:text-white bg-white/5 backdrop-blur-sm transition-all duration-300 active:scale-95"
+                          className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-bold text-white border border-white/10 hover:border-white/20 hover:bg-white/10 bg-white/5 backdrop-blur-md transition-all duration-300 active:scale-95"
                         >
                           {slide.ctaSecondary.label}
                         </Link>
                       </motion.div>
 
-                      {/* Trust badges inline */}
+                      {/* Trust Badges */}
                       <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ duration: 0.6, delay: 0.6 }}
-                        className="flex items-center gap-5 pt-1"
+                        transition={{ duration: 0.6, delay: 0.55 }}
+                        className="flex items-center gap-5 pt-3 border-t border-white/5 max-w-sm"
                       >
                         {trustBadges.map((badge, i) => {
                           const Icon = badge.icon;
                           return (
-                            <div key={i} className="flex items-center gap-1.5 text-white/30">
-                              <Icon className="h-3 w-3" />
-                              <span className="text-[10px] font-semibold uppercase tracking-widest">{badge.label}</span>
+                            <div key={i} className="flex items-center gap-1.5 text-white/40 hover:text-white/60 transition-colors">
+                              <Icon className="h-3.5 w-3.5 text-[#2FA98C]" />
+                              <span className="text-[9px] font-bold uppercase tracking-widest leading-none">{badge.label}</span>
                             </div>
                           );
                         })}
                       </motion.div>
                     </motion.div>
 
-                    {/* Right Image — full bleed into slide edge */}
+                    {/* Right Image — Framed glass card with subtle scale hover */}
                     <motion.div
                       key={`image-${slide.id}`}
-                      initial={{ opacity: 0, x: 40 }}
-                      animate={{ opacity: 1, x: 0 }}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                      className="hidden md:block relative self-stretch flex-shrink-0 w-[38%]"
+                      className="hidden md:block relative w-[42%] h-[42vh] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl flex-shrink-0"
                     >
-                      {/* Glow behind image */}
-                      <div
-                        className="absolute inset-0 blur-3xl opacity-25 scale-90"
-                        style={{ backgroundColor: slide.accentColor }}
-                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10 pointer-events-none" />
 
-                      {/* Image fills full height of slide */}
                       <img
                         src={slide.image}
                         alt={slide.tag}
-                        className="absolute inset-0 w-full h-full object-cover object-center"
-                        style={{
-                          maskImage: "linear-gradient(to right, transparent 0%, black 30%)",
-                          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 30%)",
-                        }}
+                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-[6000ms] ease-out"
                       />
 
-                      {/* Badge pill floating on image */}
+                      {/* Floating Verification Badge */}
                       <div
-                        className={`absolute bottom-8 left-4 z-20 flex items-center gap-2 px-3 py-1.5 rounded-full text-white text-[11px] font-bold shadow-xl ${slide.badgeColor}`}
+                        className="absolute bottom-6 left-6 z-20 flex items-center gap-2 px-4 py-2 rounded-full text-white text-[11px] font-black uppercase tracking-widest shadow-lg bg-[#071310]/80 backdrop-blur-md border border-[#2FA98C]/30"
                       >
-                        <Shield className="h-3 w-3" />
-                        Verified & Licensed
+                        <Shield className="h-3.5 w-3.5 text-[#2FA98C]" />
+                        Verified Partner
                       </div>
                     </motion.div>
                   </div>
@@ -319,7 +304,7 @@ export function HeroCarousel({ medicines }: HeroCarouselProps) {
       <motion.div
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-14 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5 text-white/25 pointer-events-none"
+        className="absolute bottom-14 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5 text-white/20 pointer-events-none"
       >
         <span className="text-[9px] font-bold uppercase tracking-[0.4em]">Scroll</span>
         <ChevronDown className="h-4 w-4" />

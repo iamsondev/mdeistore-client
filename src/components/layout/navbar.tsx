@@ -2,15 +2,15 @@
 
 import {
   Menu,
-  Pill,
-  Info,
-  HelpCircle,
   LogOut,
+  LogIn,
   LayoutDashboard,
   UserCircle,
   Shapes,
   User,
+  UserPlus,
 } from "lucide-react";
+import { MedistoreLogo } from "./MedistoreLogo";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -118,72 +118,69 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-full gap-4">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="bg-primary/10 p-1.5 rounded-lg group-hover:bg-primary/20 transition-colors">
-              <Pill className="h-6 w-6 text-primary" />
-            </div>
-            <span className="text-xl font-bold text-primary tracking-tight">Medistore</span>
-          </Link>
+          <MedistoreLogo size={38} />
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-2">
-            <NavigationMenu>
-              <NavigationMenuList>
+            {mounted ? (
+              <NavigationMenu>
+                <NavigationMenuList>
 
-                {/* Home */}
-                <NavigationMenuItem>
-                  <NavigationMenuLink asChild>
-                    <Link href="/" className={navClass(pathname === "/")}>
-                      Home
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-
-                {/* Shop Dropdown */}
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="bg-transparent font-semibold">Shop</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid w-[400px] md:w-[500px] md:grid-cols-2 gap-3 p-4">
-                      {categories.length > 0 ? (
-                        categories.map((item) => (
-                          <li key={item.id}>
-                            <Link
-                              href={`/shop?categoryId=${item.id}`}
-                              className="flex items-center gap-3 p-3 rounded-md hover:bg-accent transition group"
-                            >
-                              {item.image ? (
-                                <img src={item.image} alt={item.name} className="h-5 w-5 rounded-md object-cover transition group-hover:scale-110" />
-                              ) : (
-                                <Shapes className="h-5 w-5 text-primary group-hover:scale-110 transition-transform" />
-                              )}
-                              <span className="text-sm font-medium">{item.name}</span>
-                            </Link>
-                          </li>
-                        ))
-                      ) : (
-                        <div className="p-4 text-center text-sm text-muted-foreground w-full col-span-2">
-                          Loading categories...
-                        </div>
-                      )}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-
-                {/* Prescription, Articles, Contact */}
-                {mainRoutes.map((route) => (
-                  <NavigationMenuItem key={route.title}>
+                  {/* Home */}
+                  <NavigationMenuItem>
                     <NavigationMenuLink asChild>
-                      <Link href={route.url} className={navClass(pathname === route.url)}>
-                        {route.title}
+                      <Link href="/" className={navClass(pathname === "/")}>
+                        Home
                       </Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
-                ))}
 
+                  {/* Shop Dropdown */}
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className="bg-transparent font-semibold">Shop</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid w-[400px] md:w-[500px] md:grid-cols-2 gap-3 p-4">
+                        {categories.length > 0 ? (
+                          categories.map((item) => (
+                            <li key={item.id}>
+                              <Link
+                                href={`/shop?categoryId=${item.id}`}
+                                className="flex items-center gap-3 p-3 rounded-md hover:bg-accent transition group"
+                              >
+                                {item.image ? (
+                                  <img src={item.image} alt={item.name} className="h-5 w-5 rounded-md object-cover transition group-hover:scale-110" />
+                                ) : (
+                                  <Shapes className="h-5 w-5 text-primary group-hover:scale-110 transition-transform" />
+                                )}
+                                <span className="text-sm font-medium">{item.name}</span>
+                              </Link>
+                            </li>
+                          ))
+                        ) : (
+                          <div className="p-4 text-center text-sm text-muted-foreground w-full col-span-2">
+                            Loading categories...
+                          </div>
+                        )}
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
 
+                  {/* Prescription, Articles, Contact */}
+                  {mainRoutes.map((route) => (
+                    <NavigationMenuItem key={route.title}>
+                      <NavigationMenuLink asChild>
+                        <Link href={route.url} className={navClass(pathname === route.url)}>
+                          {route.title}
+                        </Link>
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                  ))}
 
-              </NavigationMenuList>
-            </NavigationMenu>
+                </NavigationMenuList>
+              </NavigationMenu>
+            ) : (
+              <div className="h-9 w-[450px]" />
+            )}
           </nav>
 
           {/* Right Side */}
@@ -234,11 +231,27 @@ export default function Navbar() {
                     </DropdownMenuContent>
                   </DropdownMenu>
                 ) : (
-                  <Link href="/login">
-                    <Button size="sm" className="hidden sm:flex rounded-full px-6 shadow-md shadow-primary/10 font-bold active:scale-95 transition-transform">
-                      Login
-                    </Button>
-                  </Link>
+                  <div className="hidden sm:flex items-center gap-2">
+                    <Link href="/login">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="rounded-full px-5 font-bold border border-border hover:border-primary/30 hover:bg-primary/5 hover:text-primary transition-all active:scale-95"
+                      >
+                        <LogIn className="h-4 w-4 mr-1.5" />
+                        Login
+                      </Button>
+                    </Link>
+                    <Link href="/register">
+                      <Button
+                        size="sm"
+                        className="rounded-full px-5 font-bold shadow-md shadow-primary/20 hover:shadow-primary/30 hover:scale-105 active:scale-95 transition-all bg-primary text-white"
+                      >
+                        <UserPlus className="h-4 w-4 mr-1.5" />
+                        Register
+                      </Button>
+                    </Link>
+                  </div>
                 )}
               </>
             )}
@@ -246,16 +259,15 @@ export default function Navbar() {
             {/* Mobile Menu */}
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="lg:hidden hover:bg-secondary rounded-full">
+                <Button variant="ghost" size="icon" className="lg:hidden hover:bg-muted rounded-full">
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-full sm:w-[350px] overflow-y-auto p-0">
                 <div className="flex flex-col h-full">
                   <SheetHeader className="text-left border-b p-6 bg-muted/20">
-                    <SheetTitle className="flex items-center gap-2">
-                      <Pill className="h-6 w-6 text-primary" />
-                      <span className="text-primary font-bold italic">Medistore</span>
+                    <SheetTitle>
+                      <MedistoreLogo size={34} asLink={false} />
                     </SheetTitle>
                   </SheetHeader>
 
@@ -276,11 +288,11 @@ export default function Navbar() {
                         {/* Account Links Mobile */}
                         <div className="space-y-1">
                           <p className="text-xs font-bold text-muted-foreground uppercase px-2 mb-2 tracking-widest">Account</p>
-                          <Link href="/dashboard" className="flex items-center gap-3 px-4 py-3 text-base font-semibold hover:bg-secondary rounded-xl transition-colors">
+                          <Link href="/dashboard" className="flex items-center gap-3 px-4 py-3 text-base font-semibold hover:bg-muted rounded-xl transition-colors">
                             <LayoutDashboard className="h-5 w-5 text-primary" />
                             Dashboard
                           </Link>
-                          <Link href="/profile/edit" className="flex items-center gap-3 px-4 py-3 text-base font-semibold hover:bg-secondary rounded-xl transition-colors">
+                          <Link href="/profile/edit" className="flex items-center gap-3 px-4 py-3 text-base font-semibold hover:bg-muted rounded-xl transition-colors">
                             <UserCircle className="h-5 w-5 text-primary" />
                             Edit Profile
                           </Link>
@@ -291,9 +303,9 @@ export default function Navbar() {
                     {/* Main Routes Mobile */}
                     <div className="space-y-1">
                       <p className="text-xs font-bold text-muted-foreground uppercase px-2 mb-2 tracking-widest">Navigation</p>
-                      <Link href="/" className="flex items-center px-4 py-3 text-base font-semibold hover:bg-secondary rounded-xl transition-colors">Home</Link>
+                      <Link href="/" className="flex items-center px-4 py-3 text-base font-semibold hover:bg-muted rounded-xl transition-colors">Home</Link>
                       {mainRoutes.map((r) => (
-                        <Link key={r.title} href={r.url} className="flex items-center px-4 py-3 text-base font-semibold hover:bg-secondary rounded-xl transition-colors">
+                        <Link key={r.title} href={r.url} className="flex items-center px-4 py-3 text-base font-semibold hover:bg-muted rounded-xl transition-colors">
                           {r.title}
                         </Link>
                       ))}
@@ -326,12 +338,20 @@ export default function Navbar() {
                         Logout
                       </Button>
                     ) : (
-                      <Link href="/login">
-                        <Button className="w-full gap-2 rounded-xl h-12 shadow-lg shadow-primary/20">
-                          <User className="h-5 w-5" />
-                          Login / Signup
-                        </Button>
-                      </Link>
+                      <div className="flex flex-col gap-3">
+                        <Link href="/register" className="block">
+                          <Button className="w-full gap-2 rounded-xl h-12 shadow-lg shadow-primary/20 bg-primary text-white font-bold text-sm tracking-wide">
+                            <UserPlus className="h-5 w-5" />
+                            Create Free Account
+                          </Button>
+                        </Link>
+                        <Link href="/login" className="block">
+                          <Button variant="outline" className="w-full gap-2 rounded-xl h-12 border-2 border-border hover:border-primary/40 hover:bg-primary/5 hover:text-primary font-bold text-sm tracking-wide transition-all">
+                            <LogIn className="h-5 w-5" />
+                            Sign In
+                          </Button>
+                        </Link>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -349,7 +369,7 @@ function navClass(active: boolean) {
   return cn(
     "px-4 py-2 text-sm font-bold rounded-full transition-all duration-200",
     active
-      ? "text-primary bg-primary/10 shadow-sm"
-      : "text-muted-foreground hover:text-primary hover:bg-secondary"
+      ? "text-primary bg-primary/10 shadow-sm ring-1 ring-primary/20"
+      : "text-foreground/70 hover:text-primary hover:bg-primary/8"
   );
 }

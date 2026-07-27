@@ -64,7 +64,7 @@ export default function AboutUsPage() {
               <motion.div
                 key={stat.label}
                 whileHover={{ y: -5 }}
-                className="p-6 rounded-3xl bg-secondary/50 border border-border flex flex-col items-center text-center space-y-2"
+                className="p-6 rounded-3xl bg-muted border border-border flex flex-col items-center text-center space-y-2"
               >
                 <stat.icon className="h-8 w-8 text-primary mb-2" />
                 <span className="text-3xl font-black tracking-tighter">{stat.value}</span>

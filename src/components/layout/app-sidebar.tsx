@@ -21,7 +21,8 @@ import { moderatorRoutes } from "@/routes/moderatorRoutes";
 import { deliveryAgentRoutes } from "@/routes/deliveryAgentRoutes";
 import { Route } from "@/types";
 import { Roles } from "@/constants/roles";
-import { Pill, ShieldCheck, User, Store, Truck, ShieldAlert, ChevronRight, LogOut } from "lucide-react";
+import { ShieldCheck, User, Store, Truck, ShieldAlert, ChevronRight, LogOut } from "lucide-react";
+import { MedistoreLogo } from "./MedistoreLogo";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -58,11 +59,11 @@ export function AppSidebar({
   let routes: Route[] = [];
   
   const roleInfo = {
-    [Roles.admin]: { label: "Administrator", icon: ShieldCheck, color: "text-rose-500 bg-rose-500/10 border-rose-500/20" },
-    [Roles.seller]: { label: "Store Partner", icon: Store, color: "text-emerald-500 bg-emerald-500/10 border-emerald-500/20" },
-    [Roles.moderator]: { label: "Guardian", icon: ShieldAlert, color: "text-amber-500 bg-amber-500/10 border-amber-500/20" },
-    [Roles.deliveryBoy]: { label: "Logistics", icon: Truck, color: "text-blue-500 bg-blue-500/10 border-blue-500/20" },
-    [Roles.customer]: { label: "Valued User", icon: User, color: "text-primary bg-primary/10 border-primary/20" },
+    [Roles.admin]:         { label: "Administrator", icon: ShieldCheck, color: "text-primary bg-primary/10 border-primary/20" },
+    [Roles.seller]:        { label: "Store Partner",  icon: Store,       color: "text-[#FF6B35] bg-[#FF6B35]/10 border-[#FF6B35]/20" },
+    [Roles.moderator]:    { label: "Guardian",       icon: ShieldAlert, color: "text-amber-500 bg-amber-500/10 border-amber-500/20" },
+    [Roles.deliveryBoy]:  { label: "Logistics",      icon: Truck,       color: "text-primary/80 bg-primary/5 border-primary/10" },
+    [Roles.customer]:     { label: "Valued User",    icon: User,        color: "text-[#FF6B35] bg-[#FF6B35]/5 border-[#FF6B35]/15" },
   };
 
   const currentRole = roleInfo[customer?.role] || { label: "Guest", icon: User, color: "text-muted-foreground bg-muted border-border" };
@@ -91,22 +92,7 @@ export function AppSidebar({
   return (
     <Sidebar className="border-r border-border/50 bg-card" {...props}>
       <SidebarHeader className="h-20 flex px-4 border-b border-border/40 bg-muted/20">
-        <Link href="/" className="flex items-center gap-3 group transition-all">
-          <motion.div 
-            whileHover={{ rotate: 15 }}
-            className="bg-primary p-2.5 rounded-2xl shadow-lg shadow-primary/20"
-          >
-            <Pill className="h-6 w-6 text-white" />
-          </motion.div>
-          <div className="flex flex-col">
-            <span className="text-xl font-black text-primary tracking-tighter leading-none italic uppercase">
-              Medistore
-            </span>
-            <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em] mt-1">
-              Health Central
-            </span>
-          </div>
-        </Link>
+        <MedistoreLogo size={38} light />
       </SidebarHeader>
 
       <SidebarContent className="px-3 py-6 space-y-8">

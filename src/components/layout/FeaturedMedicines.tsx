@@ -39,9 +39,13 @@ export function FeaturedMedicines({ medicines }: { medicines: any[] }) {
                    </div>
                 </div>
                 <img
-                  src={medicine.image || "https://placehold.co/400x300"}
+                  src={medicine.image && medicine.image !== "" && medicine.image !== "/" ? medicine.image : "https://images.unsplash.com/photo-1628771065518-0d82f1938462?q=80&w=400&auto=format&fit=crop"}
                   alt={medicine.name}
                   className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = "https://images.unsplash.com/photo-1628771065518-0d82f1938462?q=80&w=400&auto=format&fit=crop";
+                  }}
                 />
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
                    <Button asChild size="icon" className="rounded-full bg-white text-black hover:bg-primary hover:text-white transition-colors">

@@ -3,6 +3,7 @@ import { ShieldCheck, Truck, RotateCcw, ChevronLeft, Heart, Share2, Wallet } fro
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AddToCartButton } from "@/components/layout/AddToCartButton";
+import { InstantPurchaseButton } from "@/components/layout/InstantPurchaseButton";
 import { Medicine, Category } from "@/types";
 import Link from "next/link";
 import { customerService } from "@/services/customer.service";
@@ -179,13 +180,10 @@ export default async function DetailsPage({ params }: TMedicineDetailsProps) {
               </Button>
             </div>
             
-            <Button 
-              className="w-full h-12 rounded-xl bg-zinc-900 text-white hover:bg-zinc-800 transition-all font-bold group"
-              disabled={!isAvailable}
-            >
-              <Wallet className="mr-2 h-4 w-4" />
-              Instant Purchase (Checkout)
-            </Button>
+            <InstantPurchaseButton 
+              medicine={medicine} 
+              isAvailable={isAvailable} 
+            />
           </div>
         </div>
       </div>

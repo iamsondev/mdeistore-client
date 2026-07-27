@@ -49,7 +49,7 @@ export function HealthBot() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 p-4 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-2xl z-50 transition-opacity ${isOpen ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+        className={`fixed bottom-6 right-6 p-4 rounded-full bg-gradient-to-br from-primary to-[#1B4D3E] text-white shadow-2xl shadow-primary/30 z-50 transition-opacity border border-white/10 ${isOpen ? "opacity-0 pointer-events-none" : "opacity-100"}`}
       >
         <MessageCircle className="h-7 w-7" />
       </motion.button>
@@ -64,7 +64,7 @@ export function HealthBot() {
             className="fixed bottom-6 right-6 w-[350px] shadow-2xl rounded-2xl overflow-hidden bg-card border border-border z-50 flex flex-col h-[500px]"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 text-white flex justify-between items-center shrink-0">
+            <div className="bg-gradient-to-r from-primary to-[#1B4D3E] p-4 text-white flex justify-between items-center shrink-0">
               <div className="flex items-center gap-2">
                 <div className="p-1.5 bg-white/20 rounded-full">
                    <Bot className="h-5 w-5" />
@@ -72,7 +72,7 @@ export function HealthBot() {
                 <div>
                    <h3 className="font-bold text-sm">MediBot</h3>
                    <div className="flex items-center gap-1.5 opacity-80 text-[10px] uppercase font-bold tracking-widest">
-                      <div className="h-1.5 w-1.5 bg-emerald-400 rounded-full animate-pulse" /> Online
+                      <div className="h-1.5 w-1.5 bg-[#FF6B35] rounded-full animate-pulse" /> Online
                    </div>
                 </div>
               </div>
@@ -86,13 +86,13 @@ export function HealthBot() {
               {messages.map((msg, i) => (
                 <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"} gap-2`}>
                   {msg.role === "bot" && (
-                    <div className="h-8 w-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 mt-auto">
+                    <div className="h-8 w-8 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-auto">
                       <Bot className="h-4 w-4" />
                     </div>
                   )}
                   <div className={`px-4 py-2 text-sm rounded-2xl max-w-[80%] leading-relaxed ${
                     msg.role === "user" 
-                      ? "bg-indigo-600 text-white rounded-br-sm" 
+                      ? "bg-primary text-white rounded-br-sm" 
                       : "bg-white dark:bg-zinc-800 border border-border rounded-bl-sm shadow-sm"
                   }`}>
                     {msg.text}
@@ -101,13 +101,13 @@ export function HealthBot() {
               ))}
               {isLoading && (
                  <div className="flex justify-start gap-2">
-                   <div className="h-8 w-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+                   <div className="h-8 w-8 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
                      <Bot className="h-4 w-4" />
                    </div>
                    <div className="px-4 py-3 bg-white dark:bg-zinc-800 border border-border rounded-2xl rounded-bl-sm shadow-sm flex items-center gap-1.5">
-                     <div className="h-1.5 w-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                     <div className="h-1.5 w-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                     <div className="h-1.5 w-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                     <div className="h-1.5 w-1.5 bg-primary rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                     <div className="h-1.5 w-1.5 bg-primary rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                     <div className="h-1.5 w-1.5 bg-primary rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
                    </div>
                  </div>
               )}
@@ -121,17 +121,17 @@ export function HealthBot() {
                  className="flex items-center gap-2 relative"
                >
                  <input
-                   type="text"
-                   placeholder="Ask MediBot..."
-                   value={input}
-                   onChange={(e) => setInput(e.target.value)}
-                   className="flex-1 bg-muted/50 border border-border rounded-full px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all pr-12"
-                 />
-                 <button 
-                   type="submit" 
-                   disabled={!input.trim() || isLoading}
-                   className="absolute right-1.5 p-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 disabled:opacity-50 transition-colors"
-                 >
+                    type="text"
+                    placeholder="Ask MediBot..."
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    className="flex-1 bg-muted/50 border border-border rounded-full px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all pr-12"
+                  />
+                  <button 
+                    type="submit" 
+                    disabled={!input.trim() || isLoading}
+                    className="absolute right-1.5 p-2 bg-primary text-white rounded-full hover:bg-[#FF6B35] disabled:opacity-50 transition-colors"
+                  >
                    <Send className="h-4 w-4 ml-0.5" />
                  </button>
                </form>

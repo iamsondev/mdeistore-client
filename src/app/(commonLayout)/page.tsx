@@ -13,6 +13,7 @@ import { LatestBlogs } from "@/components/layout/LatestBlogs";
 import { Testimonials } from "@/components/layout/Testimonials";
 import { FAQSection } from "@/components/layout/FAQSection";
 import { NewsletterSection } from "@/components/layout/NewsletterSection";
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
 
 export default async function Home() {
   // Fetch all data server-side in parallel
@@ -77,6 +78,9 @@ export default async function Home() {
 
       {/* 11. Newsletter */}
       <NewsletterSection />
+
+      {/* Floating Scroll To Top Button */}
+      <ScrollToTop />
 
     </div>
   );

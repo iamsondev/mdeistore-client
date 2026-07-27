@@ -1,152 +1,145 @@
-💊 MediStore – Online Medicine Shop
+# 💊 Medistore — Modern Online Pharmacy & Healthcare Platform
 
-🔗 Frontend Live: https://medistore-client-bice.vercel.app
+[![Next.js](https://img.shields.io/badge/Next.js-16_App_Router-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+[![Better Auth](https://img.shields.io/badge/Better_Auth-v1.4-purple?style=for-the-badge)](https://www.better-auth.com/)
+[![Stripe](https://img.shields.io/badge/Stripe-Payment-635BFF?style=for-the-badge&logo=stripe)](https://stripe.com/)
+[![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?style=for-the-badge&logo=vercel)](https://vercel.com)
 
-🔗 Backend Live: https://medistore-server-fawn.vercel.app
+**Medistore** is a state-of-the-art, full-stack healthcare e-commerce application designed to deliver authentic medicines, healthcare essentials, and wellness products. Built with **Next.js 16 (App Router)**, **TypeScript**, **Better Auth**, and **Stripe Payment Gateway**, it features multi-role dashboard management, real-time cart synchronization, dynamic filtering, and AI-powered health assistance.
 
-🎥 Demo Video: https://drive.google.com/file/d/15dPqwcP9rfxQYUSjQkfi8nzgI-WNqPrr/view?usp=sharing
+---
 
-📂 Frontend Repository: https://github.com/iamsondev/mdeistore-client
+## 🔗 Quick Links & Live Demos
 
-📂 Backend Repository: https://github.com/iamsondev/medistore-server
+- 🌐 **Frontend Live Application:** [medistore-client-bice.vercel.app](https://medistore-client-bice.vercel.app)
+- ⚙️ **Backend API Service:** [medistore-server-fawn.vercel.app](https://medistore-server-fawn.vercel.app)
+- 🎥 **Video Demo Walkthrough:** [Google Drive Demo Video](https://drive.google.com/file/d/15dPqwcP9rfxQYUSjQkfi8nzgI-WNqPrr/view?usp=sharing)
+- 📂 **Frontend Repository:** [github.com/iamsondev/mdeistore-client](https://github.com/iamsondev/mdeistore-client)
+- 📂 **Backend Repository:** [github.com/iamsondev/medistore-server](https://github.com/iamsondev/medistore-server)
 
-🚀 Project Overview
+---
 
-MediStore is a full-stack e-commerce web application for purchasing over-the-counter (OTC) medicines.
+## ✨ Key Features & Architecture
 
-Users can:
+### 1. 👥 Multi-Role Authorization & Dashboard System
+- **Customer Dashboard:** Manage personal orders, track delivery status, view purchase history, and update profile settings.
+- **Seller Dashboard:** Add/edit/delete medicine inventory, manage incoming customer order requests, and track stock.
+- **Admin Dashboard:** Overall platform statistics, manage users, approve sellers, handle payments, and control categories.
+- **Moderator Dashboard:** Review products, moderate product ratings/reviews, and generate compliance reports.
+- **Delivery Agent Dashboard:** View assigned order dispatches, update order delivery statuses, and view delivery history.
 
-Browse medicines
+### 2. 🛒 E-Commerce & Instant Purchase Flow
+- **Interactive Shop & Advanced Search:** Filter medicines by category, price range (`৳`), stock availability, and sort parameters.
+- **Instant Purchase & Checkout:** Direct checkout option from product details pages.
+- **Cart Management:** Dynamic Zustand cart state synchronized with `localStorage` and hydration error protection.
 
-View detailed product information
+### 3. 💳 Stripe Payment Gateway & Cash on Delivery (COD)
+- Support for **Stripe Online Card Payments** with automatic webhooks and redirect success/cancel handling.
+- Seamless **Cash on Delivery (COD)** checkout flow.
 
-Add products to cart
+### 4. 🤖 AI Health Assistant (HealthBot)
+- Integrated AI health assistant to guide users with quick medical queries and product recommendations.
 
-Login with Google
+---
 
-Place orders securely
+## 🛠 Tech Stack & Tools
 
-🛠 Tech Stack
-🖥 Frontend
+| Layer | Technology / Library |
+| :--- | :--- |
+| **Framework** | Next.js 16 (App Router, Server Actions, Middleware) |
+| **Language** | TypeScript |
+| **Styling** | Tailwind CSS v4, Framer Motion, GSAP Animations |
+| **UI Components** | Shadcn UI, Radix UI Primitives, Lucide Icons |
+| **State Management**| Zustand (Persisted Cart Store) |
+| **Form & Validation**| TanStack Form, Zod Schema Validation |
+| **Authentication** | Better Auth (Google OAuth, Credentials, Proxy Handler) |
+| **Payments** | Stripe JS / React Stripe SDK |
+| **Notifications** | Sonner Toasts |
 
-Next.js 14 (App Router)
+---
 
-TypeScript
+## 🔑 Environment Variables Setup
 
-Tailwind CSS
+Create a `.env.local` file in the root of `medistore-client`:
 
-Shadcn UI
+```env
+# Server URLs
+BACKEND_URL=http://localhost:3000
+FRONTEND_URL=http://localhost:5000
 
-Better Auth (Google OAuth)
+AUTH_URL=http://localhost:3000/api/auth
+API_URL=http://localhost:3000
 
-Axios
+# Client Public Env
+NEXT_PUBLIC_BACKEND_URL=http://localhost:3000
+NEXT_PUBLIC_FRONTEND_URL=http://localhost:5000
+NEXT_PUBLIC_STRIPE_PUBLIC_KEY=your_stripe_publishable_key
+```
 
-⚙ Backend
+---
 
-Node.js
+## 📦 Getting Started & Installation
 
-Express.js
+### Prerequisites
+- Node.js `v18.x` or `v20.x`
+- `npm` or `pnpm`
 
-PostgreSQL
-
-Prisma ORM
-
-Better Auth
-
-Zod Validation
-
-☁ Deployment
-
-Vercel (Frontend & Backend)
-
-PostgreSQL (Production Database)
-
-🔐 Authentication
-
-Google OAuth Login
-
-Secure session handling using Better Auth
-
-Role-based user management
-
-✨ Core Features
-
-🔍 Medicine Search & Browse
-
-🛒 Add to Cart
-
-📦 Order Placement
-
-🔐 Secure Authentication
-
-📱 Responsive UI
-
-🗂 Admin Medicine Management
-
-❌ Out-of-stock Handling
-
-📦 Installation Guide
-1️⃣ Clone Repositories
-git clone https://github.com/iamsondev/mdeistore-client
-git clone https://github.com/iamsondev/medistore-server
-2️⃣ Backend Setup
-cd medistore-server
-npm install
-
-Create .env file:
-
-DATABASE_URL=your_postgres_database_url
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-BETTER_AUTH_SECRET=your_secret
-
-Run:
-
-npx prisma generate
-npx prisma migrate dev
-npm run dev
-3️⃣ Frontend Setup
+### 1. Clone the repository
+```bash
+git clone https://github.com/iamsondev/mdeistore-client.git
 cd mdeistore-client
+```
+
+### 2. Install dependencies
+```bash
 npm install
+```
+
+### 3. Run Development Server
+```bash
 npm run dev
-🗄 Database Schema
+```
+Open [http://localhost:5000](http://localhost:5000) in your browser.
 
-Built using Prisma ORM with:
+---
 
-User
+## 📂 Project Structure
 
-Medicine
+```
+medistore-client/
+├── src/
+│   ├── actions/               # Server Actions (Orders, Payments, Reviews)
+│   ├── app/                   # Next.js App Router Structure
+│   │   ├── (commonLayout)/    # Public routes (Home, Shop, Cart, Checkout, Auth)
+│   │   ├── (dashboardLayout)/ # Parallel routes (@admin, @seller, @customer, etc.)
+│   │   └── api/               # Better Auth Proxy & Revalidation API routes
+│   ├── components/
+│   │   ├── checkout/          # Checkout & Stripe Payment forms
+│   │   ├── layout/            # Navbar, Footer, CartIcon, Buttons
+│   │   ├── modules/           # Feature-specific modules (Shop, Home, Seller, AI)
+│   │   └── ui/                # Shadcn UI reusable primitives
+│   ├── lib/                   # Auth Client setup, Utilities
+│   ├── services/              # API Fetchers (Customer, Seller, Admin)
+│   ├── store/                 # Zustand Stores (Cart, etc.)
+│   ├── types/                 # TypeScript Types & Interfaces
+│   └── middleware.ts          # Edge Role-Based Protection Middleware
+└── public/                    # Static Assets & Icons
+```
 
-Order
+---
 
-Cart
+## 👨‍💻 Author
 
-Role-based system
+**Sondip Kumar**  
+*Full Stack Web Developer (Next.js | TypeScript | Node.js | PostgreSQL)*
 
-🌍 Live Deployment
+- **GitHub:** [@iamsondev](https://github.com/iamsondev)
+- **Email:** sondip@example.com
 
-Frontend deployed on Vercel
-Backend deployed on Vercel Serverless Functions
+---
 
-📈 Future Improvements
+## 📜 License
 
-💳 Payment Gateway Integration
-
-📊 Admin Dashboard Analytics
-
-📦 Order Tracking System
-
-⭐ Review & Rating System
-
-📧 Email Notification System
-
-👨‍💻 Author
-
-Sondip Kumar
-Full Stack Developer (MERN + Next.js + PostgreSQL)
-
-GitHub: https://github.com/iamsondev
-
-📜 License
-
-This project is for educational purposes.
+Distributed under the MIT License. See `LICENSE` for more information.

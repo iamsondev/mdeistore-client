@@ -103,7 +103,7 @@ export default function BlogPage() {
         </div>
 
         {/* Newsletter Callout */}
-        <div className="mt-24 p-12 md:p-16 rounded-[3rem] bg-secondary/50 border border-border relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-12">
+        <div className="mt-24 p-12 md:p-16 rounded-[3rem] bg-muted/60 dark:bg-muted/30 border border-border relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-12">
            <div className="space-y-4 max-w-lg">
               <h2 className="text-3xl font-black tracking-tight uppercase">Subscribe to the Dose</h2>
               <p className="text-muted-foreground font-medium italic">Get the latest medical news and exclusive health tips delivered straight to your inbox weekly.</p>

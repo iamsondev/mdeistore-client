@@ -98,7 +98,7 @@ export default function NotFound() {
                 Go Home
               </Link>
             </Button>
-            <Button variant="outline" size="lg" className="rounded-full px-8 h-14 text-base font-bold group hover:bg-secondary/50 transition-all border-2 active:scale-95" onClick={() => window.history.back()}>
+            <Button variant="outline" size="lg" className="rounded-full px-8 h-14 text-base font-bold group hover:bg-muted transition-all border-2 active:scale-95" onClick={() => window.history.back()}>
               <MoveLeft className="mr-2 h-5 w-5 transition-transform group-hover:-translate-x-2" />
               Get Back
             </Button>

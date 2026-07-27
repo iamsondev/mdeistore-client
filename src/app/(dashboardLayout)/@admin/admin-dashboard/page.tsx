@@ -34,28 +34,28 @@ export default async function AdminDashboardPage() {
       label: "Total Revenue", 
       value: `৳${totalRevenue.toLocaleString()}`, 
       icon: TrendingUp, 
-      color: "from-emerald-500 to-teal-600",
+      color: "from-primary to-[#1B4D3E]",
       description: "Lifetime earnings (Paid)"
     },
     { 
       label: "Total Orders", 
       value: totalOrders, 
       icon: ShoppingBag, 
-      color: "from-indigo-500 to-blue-600",
+      color: "from-[#FF6B35] to-orange-600",
       description: "Order requests processed"
     },
     { 
       label: "Medicines", 
       value: totalMedicines, 
       icon: Package, 
-      color: "from-rose-500 to-pink-600",
+      color: "from-primary/80 to-emerald-600",
       description: "Inventory items"
     },
     { 
       label: "Customers", 
       value: totalUsers, 
       icon: Users, 
-      color: "from-amber-500 to-orange-600",
+      color: "from-[#FF6B35]/80 to-amber-600",
       description: "Active platform users"
     },
   ];
@@ -63,21 +63,21 @@ export default async function AdminDashboardPage() {
   return (
     <div className="space-y-10 p-4">
       {/* ── Header Section ── */}
-      <div className="relative overflow-hidden rounded-[2.5rem] bg-zinc-900 p-8 md:p-12 text-white shadow-2xl">
+      <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-primary via-primary/90 to-[#1B4D3E] p-8 md:p-12 text-white shadow-2xl shadow-primary/20">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <h1 className="text-4xl font-black tracking-tighter sm:text-5xl">
               Greetings, {userName}! <ShieldCheck className="inline h-10 w-10 text-emerald-400 align-middle" />
             </h1>
-            <p className="text-zinc-400 font-medium text-lg leading-relaxed max-w-md">
-              Your platform overview is ready. Here&apos;s a summary of the current ecosystem status.
-            </p>
+            <p className="text-primary-foreground/70 font-medium text-lg leading-relaxed max-w-md">
+            Your platform overview is ready. Here&apos;s a summary of the current ecosystem status.
+          </p>
           </div>
           <div className="flex gap-4">
-             <div className="bg-zinc-800/50 backdrop-blur-md rounded-3xl p-6 border border-zinc-700/50">
-                <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest mb-1">Status</p>
+             <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 border border-white/15">
+                <p className="text-primary-foreground/60 text-[10px] font-black uppercase tracking-widest mb-1">Status</p>
                 <div className="flex items-center gap-2">
-                   <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                   <div className="h-2 w-2 rounded-full bg-white animate-pulse" />
                    <span className="font-bold text-sm">System Online</span>
                 </div>
              </div>
@@ -85,8 +85,8 @@ export default async function AdminDashboardPage() {
         </div>
         
         {/* Decorative background circle */}
-        <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-emerald-500/10 blur-3xl" />
-        <div className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-indigo-500/10 blur-3xl" />
+        <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
+        <div className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-black/10 blur-3xl" />
       </div>
 
       {/* ── Main Stats Grid ── */}
@@ -130,38 +130,38 @@ export default async function AdminDashboardPage() {
       {/* ── Secondary Logistics Section ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
          <div className="rounded-[2.5rem] bg-gradient-to-br from-zinc-50 to-white dark:from-zinc-900 dark:to-zinc-950 border border-border/50 p-8 shadow-2xl">
-            <h3 className="text-lg font-black uppercase tracking-[0.2em] mb-8 flex items-center gap-3">
-               <Truck className="h-5 w-5 text-indigo-500" /> Logistics Support
-            </h3>
+             <h3 className="text-lg font-black uppercase tracking-[0.2em] mb-8 flex items-center gap-3">
+                <Truck className="h-5 w-5 text-primary" /> Logistics Support
+             </h3>
             
             <div className="grid grid-cols-2 gap-6">
                <div className="bg-white dark:bg-zinc-800 p-6 rounded-3xl border border-border/40 shadow-sm">
                   <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest mb-2">Delivery Agents</p>
                   <p className="text-4xl font-black">{totalAgents}</p>
-                  <div className="mt-4 flex items-center gap-2 text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-1 rounded-lg w-fit">
-                     <Users className="h-3 w-3" /> Active Fleet
-                  </div>
+                   <div className="mt-4 flex items-center gap-2 text-[10px] font-bold text-primary bg-primary/10 dark:bg-primary/5 px-2 py-1 rounded-lg w-fit">
+                      <Users className="h-3 w-3" /> Active Fleet
+                   </div>
                </div>
                
                <div className="bg-white dark:bg-zinc-800 p-6 rounded-3xl border border-border/40 shadow-sm">
                   <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest mb-2">Store Partners</p>
                   <p className="text-4xl font-black">{totalSellers}</p>
-                  <div className="mt-4 flex items-center gap-2 text-[10px] font-bold text-blue-600 bg-blue-50 dark:bg-blue-900/20 px-2 py-1 rounded-lg w-fit">
-                     <Store className="h-3 w-3" /> Registered
-                  </div>
+                   <div className="mt-4 flex items-center gap-2 text-[10px] font-bold text-[#FF6B35] bg-[#FF6B35]/10 dark:bg-[#FF6B35]/5 px-2 py-1 rounded-lg w-fit">
+                      <Store className="h-3 w-3" /> Registered
+                   </div>
                </div>
             </div>
          </div>
 
-         <div className="rounded-[2.5rem] bg-indigo-600 p-10 text-white flex flex-col justify-between shadow-2xl relative overflow-hidden group">
+         <div className="rounded-[2.5rem] bg-gradient-to-br from-primary via-primary/90 to-[#1B4D3E] p-10 text-white flex flex-col justify-between shadow-2xl relative overflow-hidden group">
             <div className="relative z-10">
                <h3 className="text-3xl font-black tracking-tighter mb-4">Daily Performance insights</h3>
-               <p className="text-indigo-100 text-lg leading-relaxed max-w-sm opacity-80 font-medium">
-                  The platform activity has increased by <span className="text-white font-black underline decoration-indigo-300 underline-offset-4">12%</span> compared to last week.
+               <p className="text-primary-foreground/70 text-lg leading-relaxed max-w-sm font-medium">
+                  The platform activity has increased by <span className="text-white font-black underline decoration-white/40 underline-offset-4">12%</span> compared to last week.
                </p>
             </div>
             
-            <button className="relative z-10 mt-8 bg-white text-indigo-600 h-14 w-full rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-indigo-50 transition-all active:scale-95 shadow-xl shadow-black/10">
+            <button className="relative z-10 mt-8 bg-white text-primary h-14 w-full rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-primary-foreground/90 transition-all active:scale-95 shadow-xl shadow-black/10">
                Generate Detailed Report
             </button>
 

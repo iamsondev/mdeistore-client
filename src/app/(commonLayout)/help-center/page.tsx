@@ -97,7 +97,7 @@ export default function HelpCenterPage() {
                 className={`w-full flex items-center gap-3 px-6 py-4 rounded-2xl font-bold transition-all ${
                   activeCategory === cat.category 
                     ? "bg-primary text-white shadow-lg shadow-primary/20 scale-[1.02]" 
-                    : "hover:bg-secondary text-muted-foreground"
+                    : "hover:bg-muted text-muted-foreground"
                 }`}
               >
                 <cat.icon className="h-5 w-5" />

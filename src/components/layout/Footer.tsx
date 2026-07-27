@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Facebook, Instagram, Twitter, Mail, Phone, MapPin, Send, Linkedin, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { MedistoreLogo } from "./MedistoreLogo";
 
 const footerLinks = {
   shop: [
@@ -31,20 +32,12 @@ const footerLinks = {
 
 const Footer = () => {
   return (
-    <footer className="bg-secondary/50 border-t pt-20 pb-10">
+    <footer className="bg-muted/60 dark:bg-muted/35 border-t pt-20 pb-10">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-8">
-            <Link href="/" className="flex items-center gap-2 group w-fit">
-              <div className="bg-primary p-2 rounded-xl group-hover:rotate-12 transition-transform duration-300">
-                <img
-                  src="https://i.ibb.co.com/Nd7y9BKL/Logo-with-Abstract-Shelf-Icon.png"
-                  className="h-8 w-auto invert"
-                  alt="MediStore Logo"
-                />
-              </div>
-            </Link>
+            <MedistoreLogo size={42} />
             <p className="text-muted-foreground text-base leading-relaxed max-w-sm">
               Your premier destination for verified healthcare solutions.
               We bridge the gap between quality medicine and convenience,

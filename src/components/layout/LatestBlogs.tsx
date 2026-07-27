@@ -4,11 +4,13 @@ import { motion } from "framer-motion";
 import { ArrowRight, Calendar, User } from "lucide-react";
 import Link from "next/link";
 
+const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=800&auto=format&fit=crop";
+
 const blogs = [
   {
     title: "10 Essential Tips for a Healthy Heart",
     excerpt: "Learn how simple lifestyle changes can significantly improve your cardiovascular health and longevity...",
-    image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?q=80&w=2070&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?q=80&w=800&auto=format&fit=crop",
     date: "Oct 15, 2025",
     author: "Dr. Smith",
     tag: "Health Tips"
@@ -16,7 +18,7 @@ const blogs = [
   {
     title: "Understanding Generic vs. Branded Medicines",
     excerpt: "Are generic medicines just as effective? We break down the science and cost benefits for your wallet...",
-    image: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?q=80&w=2070&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1628771065518-0d82f1938462?q=80&w=800&auto=format&fit=crop",
     date: "Oct 12, 2025",
     author: "Pharmacy Team",
     tag: "Education"
@@ -24,7 +26,7 @@ const blogs = [
   {
     title: "The Rise of Telemedicine in 2025",
     excerpt: "How digital health platforms are making healthcare accessible to everyone, everywhere, at any time...",
-    image: "https://images.unsplash.com/photo-1576091160550-217359f42f8c?q=80&w=2070&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?q=80&w=800&auto=format&fit=crop",
     date: "Oct 10, 2025",
     author: "Health Tech",
     tag: "Innovation"
@@ -72,7 +74,11 @@ export function LatestBlogs() {
                 <img 
                   src={blog.image} 
                   alt={blog.title} 
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = FALLBACK_IMAGE;
+                  }}
                 />
                 <div className="absolute top-4 left-4 bg-primary text-white text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full">
                   {blog.tag}
